@@ -10,7 +10,7 @@ $audio = [".aac",".ac3",".aif",".aiff",".amr",".aob",".ape",".asf",".aud",".aud"
 $adress = $this->getProperty("CONTROLADDRESS");
 $this->setProperty("havedfiles",'0');
 $mediaserver = new Mediaserver();
-$browse = new Mediaserver\Browse($adress);
+$browse = new Mediaserver\Remote($adress);
 $directories = $browse->browse();
 $count=0;
 foreach($directories as $list){
