@@ -2,7 +2,7 @@
 
 namespace jalder\Upnp;
 
-class Renderer extends Core
+class MediaRenderer extends Core
 {
 
     public function discover()
