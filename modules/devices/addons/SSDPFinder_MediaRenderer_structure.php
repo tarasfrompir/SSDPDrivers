@@ -27,6 +27,7 @@ $this->device_types['MediaRenderer'] = array(
             'stop'=>array('DESCRIPTION'=>'Стоп'),
             'playUrl'=>array('DESCRIPTION'=>'Воспроизвести ссылку'),
             'playNextUrl'=>array('DESCRIPTION'=>'Воспроизвести следующую ссылку без прерывания предыдущей'),
+            'urllist'=>array('DESCRIPTION'=>'Необходимая добавка к шаблону'),
 
         )
 );
