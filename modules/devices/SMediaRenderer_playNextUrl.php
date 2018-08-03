@@ -1,9 +1,9 @@
 <?php
 require(dirname(__FILE__).'/../ssdp_finder/upnp/vendor/autoload.php');
-use jalder\Upnp\Renderer;
-$renderer = new Renderer();
+use jalder\Upnp\MediaRenderer;
+$renderer = new MediaRenderer();
 $adress = $this->getProperty("CONTROLADDRESS");
-$remote = new Renderer\Remote($adress);
+$remote = new MediaRenderer\Remote($adress);
 $playNextUrl = $this->getProperty("playNextUrl");
 if (strpos($playUrl,'youtube')>1 AND strpos($playUrl,'youtube')<20) {
     $res1=parse_url($playUrl, PHP_URL_QUERY);

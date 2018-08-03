@@ -2,12 +2,12 @@
 
 require(dirname(__FILE__).'/../ssdp_finder/upnp/vendor/autoload.php');
 
-use jalder\Upnp\Renderer;
+use jalder\Upnp\MediaRenderer;
 
-$renderer = new Renderer();
+$renderer = new MediaRenderer();
 
 $adress = $this->getProperty("CONTROLADDRESS");
-$remote = new Renderer\Remote($adress);
+$remote = new MediaRenderer\Remote($adress);
 $next = $this->getProperty("next");
 if ( $next ) {
     $result = $remote->next();

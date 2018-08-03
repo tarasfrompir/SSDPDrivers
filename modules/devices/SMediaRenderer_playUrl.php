@@ -1,9 +1,9 @@
 <?php
 require(dirname(__FILE__).'/../ssdp_finder/upnp/vendor/autoload.php');
-use jalder\Upnp\Renderer;
-$renderer = new Renderer();
+use jalder\Upnp\MediaRenderer;
+$renderer = new MediaRenderer();
 $adress = $this->getProperty("CONTROLADDRESS");
-$remote = new Renderer\Remote($adress);
+$remote = new MediaRenderer\Remote($adress);
 $playUrl = $this->getProperty("playUrl");
 $info = $remote->getPosition();
 $doc = new \DOMDocument();

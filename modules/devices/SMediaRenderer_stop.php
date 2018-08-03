@@ -4,11 +4,11 @@ require(dirname(__FILE__).'/../ssdp_finder/upnp/vendor/autoload.php');
 
 use jalder\Upnp\Renderer;
 
-$renderer = new Renderer();
+$renderer = new MediaRenderer();
 
 $adress = $this->getProperty("CONTROLADDRESS");
 $stop = $this->getProperty("stop");
-$remote = new Renderer\Remote($adress);
+$remote = new MediaRenderer\Remote($adress);
 if ( $stop ) {
     $result = $remote->stop();
     $this->setProperty("stop",0);
