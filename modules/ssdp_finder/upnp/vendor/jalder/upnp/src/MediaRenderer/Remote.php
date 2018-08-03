@@ -5,7 +5,7 @@
  * @author jalder
  */
 
-namespace jalder\Upnp\Renderer;
+namespace jalder\Upnp\MediaRenderer;
 
 use jalder\Upnp;
 
@@ -174,27 +174,5 @@ class Remote
 		$args = array('InstanceId' => 0,'Channel' => 'Master','DesiredMute' => 0);
 		return $this->upnp->sendRequestToDevice('SetMute',$args,$this->ctrlurl,$type = 'RenderingControl');
 	}
-	
-	//this should be moved to the upnp and renderer model
-	public function getControlURL($description_url, $service = 'RenderingControl')
-	{
-		$description = $this->getDescription($description_url);
-		switch($service)
-		{
-			case 'RenderingControl':
-				$serviceType = 'urn:schemas-upnp-org:service:RenderingControl:1';
-				break;
-			default:
-				$serviceType = 'urn:schemas-upnp-org:service:RenderingControl:1';
-				break;
-		}
-		foreach($description['device']['serviceList']['service'] as $service)
-		{
-			if($service['serviceType'] == $serviceType)
-			{
-				$url = parse_url($description_url);
-				return $url['scheme'].'://'.$url['host'].':'.$url['port'].$service['controlURL'];
-			}
-		}
-	}
+
 }
