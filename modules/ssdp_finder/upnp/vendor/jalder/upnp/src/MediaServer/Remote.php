@@ -4,14 +4,13 @@ namespace jalder\Upnp\Mediaserver;
 use jalder\Upnp\Mediaserver;
 
 
-class Browse
+class Remote
 {
 
     public $ctrlurl;
     private $upnp;
 
-    public function __construct($server)
-    {
+    public function __construct($server) {
         $this->upnp = new Mediaserver();
         $control_url = str_ireplace("Location:", "", $server);
         $xml=simplexml_load_file($control_url);
