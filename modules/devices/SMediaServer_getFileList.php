@@ -8,7 +8,6 @@ $video = [".3g2",".3gp",".3gp2",".3gpp",".3gpp2",".asf",".asx",".avi",".bin",".d
 $audio = [".aac",".ac3",".aif",".aiff",".amr",".aob",".ape",".asf",".aud",".aud",".aud",".aud",".awb",".bin",".bwg",".cdr",".flac",".gpx",".ics",".iff",".m",".m3u",".m3u8",".m4a",".m4b",".m4p",".m4r",".mid",".midi",".mod",".mp3",".mp3",".mp3",".mpa",".mpp",".msc",".msv",".mts",".nkc",".ogg",".ps",".ra",".ram",".sdf",".sib",".sln",".spl",".srt",".srt",".temp",".vb",".wav",".wav",".wave",".wm",".wma",".wpd",".xsb",".xwb"];
 
 $adress = $this->getProperty("CONTROLADDRESS");
-$this->setProperty("havedfiles",'0');
 $mediaserver = new Mediaserver();
 $browse = new Mediaserver\Remote($adress);
 $directories = $browse->browse();
@@ -37,6 +36,7 @@ foreach($directories as $list){
         $Record['LINKED_OBJECT'] = $this->description;
         SQLUpdateInsert('mediaservers_playlist', $Record);
         $count = $count+1;
+        
     }
    }
 $this->setProperty("havedfiles",$count);
