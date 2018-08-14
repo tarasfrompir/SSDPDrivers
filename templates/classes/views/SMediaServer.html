@@ -22,7 +22,8 @@
 <script type = "text/javascript">
 
 function %.object_title%(){
-  document.getElementById("%.object_title%").style.display = "block";
+  setTimeout(function(){$('#%.object_title%').fadeIn()}, 1000);  
+document.getElementById("%.object_title%").style.display = "block";
   setTimeout(function(){$('#%.object_title%').fadeOut()}, 3000);
 };
 
