@@ -7,5 +7,5 @@ $this->device_types['InternetGatewayDevice'] = array(
         'PROPERTIES'=>array(
             'Username'=>array('DESCRIPTION'=>'Username','_CONFIG_TYPE'=>'text'),
             'Password'=>array('DESCRIPTION'=>'Password','ONCHANGE'=>'updatePreview','_CONFIG_TYPE'=>'text'),
-        )
+        ),
 );
