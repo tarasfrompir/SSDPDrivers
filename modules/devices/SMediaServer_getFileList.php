@@ -12,6 +12,9 @@ $mediaserver = new Mediaserver();
 $browse = new Mediaserver\Remote($adress);
 $directories = $browse->browse();
 $count=0;
+// очищаем данные файлов текущего сервера
+SQLExec("DELETE FROM mediaservers_playlist WHERE LINKED_OBJECT='".$this->description."'");
+
 foreach($directories as $list){
     $files = $browse->browsexmlfiles($list['id']);
     foreach($files as $file){
