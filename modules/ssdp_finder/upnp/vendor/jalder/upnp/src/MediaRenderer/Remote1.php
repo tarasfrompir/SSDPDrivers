@@ -5,7 +5,7 @@
  * @author jalder
  */
 
-namespace jalder\Upnp\Renderer;
+namespace jalder\Upnp\MediaRenderer;
 
 use jalder\Upnp;
 
