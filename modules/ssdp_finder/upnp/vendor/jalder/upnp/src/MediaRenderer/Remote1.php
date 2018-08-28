@@ -5,21 +5,19 @@
  * @author jalder
  */
 
-namespace jalder\Upnp\MediaRenderer;
+namespace jalder\Upnp\Renderer;
 
 use jalder\Upnp;
 
-class Remote
-{
-
-  public $ctrlurl;
-  private $upnp;
-  public function __construct($server) {
+class RemoteVolume {
+    public $ctrlurl;
+    private $upnp;
+    public function __construct($server) {
     $this->upnp = new Upnp\Core();
     $control_url = str_ireplace("Location:", "", $server);
     $xml=simplexml_load_file($control_url);
     foreach($xml->device->serviceList->service as $service){
-          if($service->serviceId == 'urn:upnp-org:serviceId:AVTransport' OR $service->serviceId == 'urn:upnp-org:serviceId:RenderingControl'){
+          if($service->serviceId == 'urn:upnp-org:serviceId:RenderingControl'){
                 $chek_url = (substr($service->controlURL,0,1));
                 if ($chek_url == '/') {
                    $this->ctrlurl = ($this->upnp->baseUrl($control_url,True).$service->controlURL);
@@ -31,42 +29,35 @@ class Remote
         }
 
 
-	public function play($url = "")
-    {
-        if($url === ""){
-            return self::unpause();
-        }
-		$args = array(
-			'InstanceID'=>0,
-			'CurrentURI'=>'<![CDATA['.$url.']]>',
-			'CurrentURIMetaData'=>''
-		);
-		$response = $this->upnp->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$type = 'AVTransport');
-		$args = array('InstanceID'=>0,'Speed'=>1);
-		$this->upnp->sendRequestToDevice('Play',$args,$this->ctrlurl,$type = 'AVTransport');
-		return $response;
-	}
-    public function setNext($url)
+	public function SetVolume($volume)
 	{
-		$args = array(
-			'InstanceID'=>0,
-			'NextURI'=>'<![CDATA['.$url.']]>',
-			'NextURIMetaData'=>'testmetadata'
-		);
-		return $this->upnp->sendRequestToDevice('SetNextAVTransportURI',$args,$this->ctrlurl,$type = 'AVTransport');
+		$args = array('InstanceId' => 0,'Channel' => 'Master','DesiredVolume' => $volume);
+		return $this->upnp->sendRequestToDevice('SetVolume',$args,$this->ctrlurl,$type = 'RenderingControl');
 	}
-	//this should be moved to the upnp and renderer model
-	public function getControlURL($description_url, $service = 'AVTransport')
+
+	public function mute()
+	{
+		$args = array('InstanceId' => 0,'Channel' => 'Master','DesiredMute' => 1);
+		return $this->upnp->sendRequestToDevice('SetMute',$args,$this->ctrlurl,$type = 'RenderingControl');
+	}
+	public function unmute()
+	{
+		$args = array('InstanceId' => 0,'Channel' => 'Master','DesiredMute' => 0);
+		return $this->upnp->sendRequestToDevice('SetMute',$args,$this->ctrlurl,$type = 'RenderingControl');
+	}
+
+		//this should be moved to the upnp and renderer model
+	public function getControlURL($description_url, $service = 'RenderingControl')
 	{
 		$description = $this->getDescription($description_url);
 
 		switch($service)
 		{
-			case 'AVTransport':
-				$serviceType = 'urn:schemas-upnp-org:service:AVTransport:1';
+			case 'RenderingControl':
+				$serviceType = 'urn:schemas-upnp-org:service:RenderingControl:1';
 				break;
 			default:
-				$serviceType = 'urn:schemas-upnp-org:service:AVTransport:1';
+				$serviceType = 'urn:schemas-upnp-org:service:RenderingControl:1';
 				break;
 		}
 
@@ -79,100 +70,4 @@ class Remote
 			}
 		}
 	}
-
-	public function getState()
-	{
-		return $this->instanceOnly('GetTransportInfo');
-	}
-
-	public function getPosition()
-	{
-		return $this->instanceOnly('getPositionInfo');
-	}
-
-	private function instanceOnly($command,$type = 'AVTransport', $id = 0)
-	{
-		$args = array(
-			'InstanceID'=>$id
-		);
-		$response = $this->upnp->sendRequestToDevice($command,$args,$this->ctrlurl,$type);
-        return $response;
-	}
-
-	public function getMedia()
-	{
-		$response = $this->instanceOnly('GetMediaInfo');
-		// сохраняет данные в файл
-		//$file = 'people.txt';
-                //file_put_contents($file, $response);
-		// создает документ хмл
-		$doc = new \DOMDocument();
-		//  загружет его
-                $doc->loadXML($response);
-		//  выбирает поле соответсвтуещее
-               $result = $doc->getElementsByTagName('CurrentURI');
-               foreach ($result as $item) {
-                        $track = $item->nodeValue;
-			}
-		return $track;
-	}
-	public function stop()
-	{
-		return $this->instanceOnly('Stop');
-	}
-	
-	public function unpause()
-	{
-		$args = array('InstanceID'=>0,'Speed'=>1);
-		return $this->upnp->sendRequestToDevice('Play',$args,$this->ctrlurl,$type = 'AVTransport');     
-	}
-
-	public function pause()
-	{
-		return $this->instanceOnly('Pause');
-	}
-
-	public function next()
-	{
-		return $this->instanceOnly('Next');
-	}
-
-	public function previous()
-	{
-		return $this->instanceOnly('Previous');
-	}
-
-        public function fforward()
-        {
-               return $this->next();
-        }
-
-        public function rewind()
-        {
-               return $this->previous();
-        }
-
-	public function seek($unit = 'TRACK_NR', $target=0)
-	{
-		$response = $this->upnp->sendRequestToDevice('Seek',$args,$this->ctrlurl.'serviceControl/AVTransport','AVTransport');
-		return $response['s:Body']['u:SeekResponse'];
-	}
-
-	
-		public function SetVolume($volume)
-	{
-		$args = array('InstanceId' => 0,'Channel' => 'Master','DesiredVolume' => $volume);
-		return $this->upnp->sendRequestToDevice('SetVolume',$args,$this->ctrlurl,$type = 'RenderingControl');
-	}
-	public function mute()
-	{
-		$args = array('InstanceId' => 0,'Channel' => 'Master','DesiredMute' => 1);
-		return $this->upnp->sendRequestToDevice('SetMute',$args,$this->ctrlurl,$type = 'RenderingControl');
-	}
-	public function unmute()
-	{
-		$args = array('InstanceId' => 0,'Channel' => 'Master','DesiredMute' => 0);
-		return $this->upnp->sendRequestToDevice('SetMute',$args,$this->ctrlurl,$type = 'RenderingControl');
-	}
-
 }
