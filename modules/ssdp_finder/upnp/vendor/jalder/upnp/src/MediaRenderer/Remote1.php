@@ -9,7 +9,7 @@ namespace jalder\Upnp\MediaRenderer;
 
 use jalder\Upnp;
 
-class RemoteVolume {
+class Remote1 {
     public $ctrlurl;
     private $upnp;
     public function __construct($server) {
