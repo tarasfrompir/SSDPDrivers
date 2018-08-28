@@ -5,7 +5,7 @@
  * @author jalder
  */
 
-namespace jalder\Upnp\MediaRenderer;
+namespace jalder\Upnp\Renderer;
 
 use jalder\Upnp;
 
@@ -19,7 +19,7 @@ class Remote
     $control_url = str_ireplace("Location:", "", $server);
     $xml=simplexml_load_file($control_url);
     foreach($xml->device->serviceList->service as $service){
-          if($service->serviceId == 'urn:upnp-org:serviceId:AVTransport' OR $service->serviceId == 'urn:upnp-org:serviceId:RenderingControl'){
+          if($service->serviceId == 'urn:upnp-org:serviceId:AVTransport'){
                 $chek_url = (substr($service->controlURL,0,1));
                 if ($chek_url == '/') {
                    $this->ctrlurl = ($this->upnp->baseUrl($control_url,True).$service->controlURL);
@@ -156,23 +156,6 @@ class Remote
 	{
 		$response = $this->upnp->sendRequestToDevice('Seek',$args,$this->ctrlurl.'serviceControl/AVTransport','AVTransport');
 		return $response['s:Body']['u:SeekResponse'];
-	}
-
-	
-		public function SetVolume($volume)
-	{
-		$args = array('InstanceId' => 0,'Channel' => 'Master','DesiredVolume' => $volume);
-		return $this->upnp->sendRequestToDevice('SetVolume',$args,$this->ctrlurl,$type = 'RenderingControl');
-	}
-	public function mute()
-	{
-		$args = array('InstanceId' => 0,'Channel' => 'Master','DesiredMute' => 1);
-		return $this->upnp->sendRequestToDevice('SetMute',$args,$this->ctrlurl,$type = 'RenderingControl');
-	}
-	public function unmute()
-	{
-		$args = array('InstanceId' => 0,'Channel' => 'Master','DesiredMute' => 0);
-		return $this->upnp->sendRequestToDevice('SetMute',$args,$this->ctrlurl,$type = 'RenderingControl');
 	}
 
 }
