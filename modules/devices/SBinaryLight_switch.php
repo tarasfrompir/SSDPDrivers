@@ -1,5 +1,5 @@
 <?php 
-
+//chek
 $currentStatus=$this->getProperty('status');
 if ($currentStatus) {
  $this->callmethodSafe('turnOff');
