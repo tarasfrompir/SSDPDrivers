@@ -1,11 +1,11 @@
 <?
-require_once("dirname(__FILE__).'/../ssdp_finder/upnp/vendor/jalder/upnp/src/Chromecast/Remote.php");
+require_once(dirname(__FILE__)."/../ssdp_finder/upnp/vendor/jalder/upnp/src/Chromecast/Remote.php");
 
 $adress = $this->getProperty("CONTROLADDRESS");
-$ip = getIp($adress,false)
+$ip = getIp($adress,false);
 $playUrl = $this->getProperty("playUrl");
 
-
+echo ($ip);
 
 // Create Chromecast object and give IP and Port
 $cc = new Chromecast($ip,"8009");
