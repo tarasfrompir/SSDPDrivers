@@ -1,8 +1,5 @@
 <?php
 
-namespace jalder\Upnp\Chromecast;
-
-
 // Chris Ridings
 // www.chrisridings.com
 require_once ("Remote1.php");
