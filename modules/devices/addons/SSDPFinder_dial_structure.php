@@ -1,7 +1,7 @@
 <?php
 
 $this->device_types['dial'] = array(
-        'TITLE'=>'UPNP DIAL устройство',
+        'TITLE'=>'UPNP CHROMECAST устройство',
         'PARENT_CLASS'=>'UPNPdevices',
         'CLASS'=>'Sdial',
         'PROPERTIES'=>array(
