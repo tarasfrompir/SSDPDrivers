@@ -1,18 +1,17 @@
 <?
-require_once("dirname(__FILE__).'/../ssdp_finder/upnp/vendor/jalder/upnp/src/Chromecast/Remote.php");
+require_once(dirname(__FILE__)."/../ssdp_finder/upnp/vendor/jalder/upnp/src/Chromecast/Remote.php");
 
 $adress = $this->getProperty("CONTROLADDRESS");
-$ip = getIp($adress,false)
-$playUrl = $this->getProperty("playUrl");
-
-
+$mute_unmute = $this->getProperty("mute_unmute");
+$ip = getIp($adress,false);
 
 // Create Chromecast object and give IP and Port
 $cc = new Chromecast($ip,"8009");
-$cc->DMP->Mute();
-$cc->DMP->UnMute();
-sleep(5);
-$cc->DMP->UnMute();
+if ($mute_unmute){
+    $cc->DMP->Mute();
+} else {
+    $cc->DMP->UnMute();
+}
 
 function getIp($baseUrl,$withPort) {
 	if( !empty($baseUrl) ){
