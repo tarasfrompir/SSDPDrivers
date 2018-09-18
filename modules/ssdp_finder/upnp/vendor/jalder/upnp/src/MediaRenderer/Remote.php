@@ -21,6 +21,7 @@ class Remote
     foreach($xml->device->serviceList->service as $service){
           if($service->serviceId == 'urn:upnp-org:serviceId:AVTransport'){
                 $chek_url = (substr($service->controlURL,0,1));
+                $this->service_type = ($service->serviceType);
                 if ($chek_url == '/') {
                    $this->ctrlurl = ($this->upnp->baseUrl($control_url,True).$service->controlURL);
                  } else {
