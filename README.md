@@ -1,4 +1,4 @@
 # SSDPDrivers
 необходимые файлы для модуля ССДП Финдер
 
-Nedded drivers
+Nedded drivers for SSDPFinder
