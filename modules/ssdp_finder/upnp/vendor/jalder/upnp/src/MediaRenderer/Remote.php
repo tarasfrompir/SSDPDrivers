@@ -14,6 +14,7 @@ class Remote
 
   public $ctrlurl;
   private $upnp;
+  public $service_type;
   public function __construct($server) {
     $this->upnp = new Upnp\Core();
     $control_url = str_ireplace("Location:", "", $server);
@@ -42,9 +43,9 @@ class Remote
 			'CurrentURI'=>'<![CDATA['.$url.']]>',
 			'CurrentURIMetaData'=>''
 		);
-		$response = $this->upnp->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$type = 'AVTransport');
+		$response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
 		$args = array('InstanceID'=>0,'Speed'=>1);
-		$this->upnp->sendRequestToDevice('Play',$args,$this->ctrlurl,$type = 'AVTransport');
+		$this->sendRequestToDevice('Play',$args,$this->ctrlurl,$this->service_type);
 		return $response;
 	}
     public function setNext($url)
@@ -54,7 +55,7 @@ class Remote
 			'NextURI'=>'<![CDATA['.$url.']]>',
 			'NextURIMetaData'=>'testmetadata'
 		);
-		return $this->upnp->sendRequestToDevice('SetNextAVTransportURI',$args,$this->ctrlurl,$type = 'AVTransport');
+		return $this->sendRequestToDevice('SetNextAVTransportURI',$args,$this->ctrlurl,$this->service_type);
 	}
 	//this should be moved to the upnp and renderer model
 	public function getControlURL($description_url, $service = 'AVTransport')
@@ -64,10 +65,10 @@ class Remote
 		switch($service)
 		{
 			case 'AVTransport':
-				$serviceType = 'urn:schemas-upnp-org:service:AVTransport:1';
+				$serviceType = $this->service_type;
 				break;
 			default:
-				$serviceType = 'urn:schemas-upnp-org:service:AVTransport:1';
+				$serviceType = $this->service_type;
 				break;
 		}
 
@@ -96,7 +97,7 @@ class Remote
 		$args = array(
 			'InstanceID'=>$id
 		);
-		$response = $this->upnp->sendRequestToDevice($command,$args,$this->ctrlurl,$type);
+		$response = $this->sendRequestToDevice($command,$args,$this->ctrlurl,$this->service_type);
         return $response;
 	}
 
@@ -125,7 +126,7 @@ class Remote
 	public function unpause()
 	{
 		$args = array('InstanceID'=>0,'Speed'=>1);
-		return $this->upnp->sendRequestToDevice('Play',$args,$this->ctrlurl,$type = 'AVTransport');     
+		return $this->sendRequestToDevice('Play',$args,$this->ctrlurl,$this->service_type);     
 	}
 
 	public function pause()
@@ -155,8 +156,51 @@ class Remote
 
 	public function seek($unit = 'TRACK_NR', $target=0)
 	{
-		$response = $this->upnp->sendRequestToDevice('Seek',$args,$this->ctrlurl.'serviceControl/AVTransport','AVTransport');
+		$response = $this->sendRequestToDevice('Seek',$args,$this->ctrlurl.'serviceControl/AVTransport','AVTransport');
 		return $response['s:Body']['u:SeekResponse'];
 	}
+private function sendRequestToDevice($method, $arguments, $url, $type, $hostIp = '127.0.0.1', $hostPort = '80')
+    {
+        $body  ='<?xml version="1.0" encoding="utf-8"?>' . "\r\n";
+        $body .='<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
+        $body .='<s:Body>';
+        $body .='<u:'.$method.' xmlns:u="'.$this->service_type.'">';
+        foreach( $arguments as $arg=>$value ) {
+            $body .='<'.$arg.'>'.$value.'</'.$arg.'>';
+        }
+        $body .='</u:'.$method.'>';
+        $body .='</s:Body>';
+        $body .='</s:Envelope>';
+ 
+        $header = array(
+			'Host: '.$this->getLocalIp().':'.$hostPort,
+            'User-Agent: '.$this->user_agent, //fudge the user agent to get desired video format
+            'Content-Length: ' . strlen($body),
+			'Connection: close',
+            'Content-Type: text/xml; charset="utf-8"',
+			'SOAPAction: "'.$this->service_type.'#'.$method.'"',
+        );
+
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_HTTPHEADER, $header );
+        curl_setopt( $ch, CURLOPT_HEADER, 0);
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
+        curl_setopt( $ch, CURLOPT_URL, $url );
+        curl_setopt( $ch, CURLOPT_POST, TRUE );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $body );
+        $response = curl_exec( $ch );
+        curl_close( $ch );
+        $doc = new \DOMDocument();
+        $doc->loadXML($response);
+        $result = $doc->getElementsByTagName('Result');
+        if(is_object($result->item(0))){
+            return $result->item(0)->nodeValue;
+        }
+        return $response;
+    }
+//получаем hostname адрес локального компьютера
+    private function getLocalIp() { 
+      return gethostbyname(trim(`hostname`)); 
+    }
 
 }
