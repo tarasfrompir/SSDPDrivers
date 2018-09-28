@@ -1,9 +1,9 @@
 <?php
 
-$this->device_types['MediaRenderer'] = array(
+$this->device_types['MAG250'] = array(
         'TITLE'=>'UPNP Устройство воспроизведения',
         'PARENT_CLASS'=>'UPNPdevices',
-        'CLASS'=>'SMediaRenderer',
+        'CLASS'=>'SMAG250',
         'PROPERTIES'=>array(
             'mute_unmute'=>array('DESCRIPTION'=>'Отключение/включение звука', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'mute-unmute', 'DATA_KEY'=>1),
             'volume'=>array('DESCRIPTION'=>'Уровень звука', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'volume', 'DATA_KEY'=>1),
@@ -13,8 +13,8 @@ $this->device_types['MediaRenderer'] = array(
             'seeknext'=>array('DESCRIPTION'=>'Перемотка вперед на 30сек', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'seeknext', 'DATA_KEY'=>1),
             'seekprevious'=>array('DESCRIPTION'=>'Перемотка назад на 30сек', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'seekprevious', 'DATA_KEY'=>1),
             'stop'=>array('DESCRIPTION'=>'Стоп', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'stop', 'DATA_KEY'=>1),
-            'playUrl'=>array('DESCRIPTION'=>'Воспроизвести ссылку', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'playUrl', 'DATA_KEY'=>1),
-            'playNextUrl'=>array('DESCRIPTION'=>'Воспроизвести следующую ссылку без прерывания предыдущей', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'playNextUrl', 'DATA_KEY'=>1),
+            '1'=>array('DESCRIPTION'=>'Кнопка 1', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'1', 'DATA_KEY'=>1),
+            '2'=>array('DESCRIPTION'=>'Кнопка 2', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'2', 'DATA_KEY'=>1),
        ),
         'METHODS'=>array(
             'mute-unmute'=>array('DESCRIPTION'=>'Отключение/включение звука'),
@@ -25,8 +25,6 @@ $this->device_types['MediaRenderer'] = array(
             'seeknext'=>array('DESCRIPTION'=>'Перемотка вперед на 30сек'),
             'seekprevious'=>array('DESCRIPTION'=>'Перемотка назад на 30сек'),
             'stop'=>array('DESCRIPTION'=>'Стоп'),
-            'playUrl'=>array('DESCRIPTION'=>'Воспроизвести ссылку'),
-            'playNextUrl'=>array('DESCRIPTION'=>'Воспроизвести следующую ссылку без прерывания предыдущей'),
-            'urllist'=>array('DESCRIPTION'=>'Необходимая добавка к шаблону'),
-
+            '1'=>array('DESCRIPTION'=>'1'),
+            '2'=>array('DESCRIPTION'=>'2'),
         )
