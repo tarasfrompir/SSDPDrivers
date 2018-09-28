@@ -23,6 +23,10 @@ $this->device_types['MAG250'] = array(
                             '7'=>array('DESCRIPTION'=>'Кнопка 7', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'7', 'DATA_KEY'=>1),
                             '8'=>array('DESCRIPTION'=>'Кнопка 8', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'8', 'DATA_KEY'=>1),
                             '9'=>array('DESCRIPTION'=>'Кнопка 9', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'9', 'DATA_KEY'=>1),
+                            'F1'=>array('DESCRIPTION'=>'Кнопка F1', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'F1', 'DATA_KEY'=>1),
+            'F2'=>array('DESCRIPTION'=>'Кнопка F2', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'F2', 'DATA_KEY'=>1),
+                            'F3'=>array('DESCRIPTION'=>'Кнопка F3', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'F3', 'DATA_KEY'=>1),
+                            'F4'=>array('DESCRIPTION'=>'Кнопка F4', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'F4', 'DATA_KEY'=>1),
        ),
         'METHODS'=>array(
             'mute-unmute'=>array('DESCRIPTION'=>'Отключение/включение звука'),
@@ -43,4 +47,8 @@ $this->device_types['MAG250'] = array(
                 '8'=>array('DESCRIPTION'=>'8'),
                 '9'=>array('DESCRIPTION'=>'9'),
                 '0'=>array('DESCRIPTION'=>'0'),
+                'F1'=>array('DESCRIPTION'=>'F1'),
+                'F2'=>array('DESCRIPTION'=>'F2'),
+            'F3'=>array('DESCRIPTION'=>'F3'),
+                'F4'=>array('DESCRIPTION'=>'F4'),
         )
