@@ -1,9 +1,9 @@
 <?php
 
-$this->device_types['MAG250'] = array(
+$this->device_types['MagXXXdevice'] = array(
         'TITLE'=>'UPNP Устройство воспроизведения',
         'PARENT_CLASS'=>'UPNPdevices',
-        'CLASS'=>'SMAG250',
+        'CLASS'=>'SMagXXXdevice',
         'PROPERTIES'=>array(
             'mute_unmute'=>array('DESCRIPTION'=>'Отключение/включение звука', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'mute-unmute', 'DATA_KEY'=>1),
             'volume'=>array('DESCRIPTION'=>'Уровень звука', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'volume', 'DATA_KEY'=>1),
