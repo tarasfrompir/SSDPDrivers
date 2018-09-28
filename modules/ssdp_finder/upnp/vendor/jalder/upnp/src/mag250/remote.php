@@ -7,6 +7,7 @@
 
 class MAG250 {
 // scan device
+
 function scan_device()
     {
     $arr = array(
@@ -19,7 +20,7 @@ function scan_device()
     $sock = socket_create(AF_INET, SOCK_DGRAM, 0);
     socket_set_option($sock, SOL_SOCKET, SO_BROADCAST, 1);
     socket_bind($sock, 0, 6777);
-    socket_sendto($sock, $post_data, strlen($post_data) , 0, '255.255.255.255', 6000);
+    socket_sendto($sock, $post_data, strlen($post_data) , 0, '239.255.255.250', 6000);
     socket_set_option($sock, SOL_SOCKET, SO_RCVTIMEO, array(
         "sec" => 1,
         "usec" => 10
@@ -31,10 +32,10 @@ function scan_device()
         @socket_recvfrom($sock, $buf, 2048, 0, $host, $sport);
         if (!is_null($buf))
             {
-            $response[] = $buf;
+			$response['host'] = $host;
+            $response['answer'] = $buf;
             }
         }
-
     while (!is_null($buf));
     return $response;
     };
@@ -52,25 +53,19 @@ function send_command($ip, $command, $password)
     $post_data = encrypt_answer($command, $password);
     // send command
     socket_sendto($sock, $post_data, strlen($post_data) , 0, $ip, 7666);
-    socket_set_option($sock, SOL_SOCKET, SO_RCVTIMEO, array(
-        "sec" => 1,
-        "usec" => 50
-    ));
+    socket_set_option($sock, SOL_SOCKET, SO_RCVTIMEO, array("sec" => 1, "usec" => 50));
     // recive command
-    do
-        {
+    do {
         $buf = null;
         @socket_recvfrom($sock, $buf, 2048, 0, $host, $port);
-        if (!is_null($buf))
-            {
-            $plaintext = $buf;
-            echo ($buf);
-            }
+        if (!is_null($buf)) {
+            $response =$buf;
+			$decript=decript($buf,$password);
         }
-    while (!is_null($buf));
+    } while (!is_null($buf));
     socket_close($sock);
-    return $plaintext;
-    }
+    return $decript;
+    };
 // decription text
 function decrypt_answer($text, $password)
     {
@@ -540,4 +535,4 @@ function key_volumeup($ip, $password)
     $answer = send_command($ip, $command, $password);
     return $answer;
     };
-    };
+}
