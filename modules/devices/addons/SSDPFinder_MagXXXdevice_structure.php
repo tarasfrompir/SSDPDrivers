@@ -52,4 +52,4 @@ $this->device_types['MAG250'] = array(
             'F3'=>array('DESCRIPTION'=>'F3'),
             'F4'=>array('DESCRIPTION'=>'F4'),
         )
-);
+)
