@@ -25,8 +25,7 @@ function scan_device()
         "usec" => 10
     ));
     $response = array();
-    do
-        {
+    do {
         $buf = null;
         @socket_recvfrom($sock, $buf, 2048, 0, $host, $sport);
         if (!is_null($buf))
@@ -37,7 +36,7 @@ function scan_device()
         }
     while (!is_null($buf));
     return $response;
-    };
+    }
 // send command to device and wait answer from device 1-ok 0-false
 // command must be array
 function send_command($ip, $command, $password)
@@ -54,7 +53,7 @@ function send_command($ip, $command, $password)
     // convert array to json
     $command = json_encode($command);
     // coded to aes-256-cbc
-    $post_data = encrypt_answer($command, $password);
+    $post_data = $this->encrypt_answer($command, $password);
     // send command
     socket_sendto($sock, $post_data, strlen($post_data) , 0, $ip, 7666);
     socket_set_option($sock, SOL_SOCKET, SO_RCVTIMEO, array("sec" => 1, "usec" => 50));
@@ -64,7 +63,7 @@ function send_command($ip, $command, $password)
         @socket_recvfrom($sock, $buf, 2048, 0, $host, $port);
         if (!is_null($buf)) {
             $response =$buf;
-			$decript=decrypt_answer($buf,$password);
+			$decript=$this->decrypt_answer($buf,$password);
         }
     } while (!is_null($buf));
     socket_close($sock);
@@ -73,21 +72,21 @@ function send_command($ip, $command, $password)
 	} else {
         return;
 	}
-};
+}
 // decription text
 function decrypt_answer($text, $password)
     {
     $iv = 'erghnlhbnmbnkghy';
     $result = openssl_decrypt($text, 'AES-256-CBC', $password, OPENSSL_RAW_DATA, $iv);
     return $result;
-    };
+    }
 // encription text
 function encrypt_answer($text, $password)
     {
     $iv = 'erghnlhbnmbnkghy';
     $result = openssl_encrypt($text, 'AES-256-CBC', $password, OPENSSL_RAW_DATA, $iv);
     return $result;
-    };
+    }
 function key_power($ip, $password)
     {
     $command = array(
@@ -98,9 +97,9 @@ function key_power($ip, $password)
         "unicode" => 117,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_mute($ip, $password)
     {
     $command = array(
@@ -111,9 +110,9 @@ function key_mute($ip, $password)
         "unicode" => 96,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_audiomode($ip, $password)
     {
     $command = array(
@@ -124,9 +123,9 @@ function key_audiomode($ip, $password)
         "unicode" => 0,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_setting($ip, $password)
     {
     $command = array(
@@ -137,9 +136,9 @@ function key_setting($ip, $password)
         "unicode" => 120,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_red($ip, $password)
     {
     $command = array(
@@ -150,9 +149,9 @@ function key_red($ip, $password)
         "unicode" => 112,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_green($ip, $password)
     {
     $command = array(
@@ -163,9 +162,9 @@ function key_green($ip, $password)
         "unicode" => 113,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_yellow($ip, $password)
     {
     $command = array(
@@ -176,9 +175,9 @@ function key_yellow($ip, $password)
         "unicode" => 114,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_blue($ip, $password)
     {
     $command = array(
@@ -189,9 +188,9 @@ function key_blue($ip, $password)
         "unicode" => 115,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_menu($ip, $password)
     {
     $command = array(
@@ -202,9 +201,9 @@ function key_menu($ip, $password)
         "unicode" => 122,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_back($ip, $password)
     {
     $command = array(
@@ -215,9 +214,9 @@ function key_back($ip, $password)
         "unicode" => 8,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_exit($ip, $password)
     {
     $command = array(
@@ -228,9 +227,9 @@ function key_exit($ip, $password)
         "unicode" => 27,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_info($ip, $password)
     {
     $command = array(
@@ -241,9 +240,9 @@ function key_info($ip, $password)
         "unicode" => 121,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_app($ip, $password)
     {
     $command = array(
@@ -254,9 +253,9 @@ function key_app($ip, $password)
         "unicode" => 123,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_tv($ip, $password)
     {
     $command = array(
@@ -267,9 +266,9 @@ function key_tv($ip, $password)
         "unicode" => 121,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_guide($ip, $password)
     {
     $command = array(
@@ -280,9 +279,9 @@ function key_guide($ip, $password)
         "unicode" => 119,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_rew($ip, $password)
     {
     $command = array(
@@ -293,9 +292,9 @@ function key_rew($ip, $password)
         "unicode" => 98,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_ffwd($ip, $password)
     {
     $command = array(
@@ -306,9 +305,9 @@ function key_ffwd($ip, $password)
         "unicode" => 102,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_play($ip, $password)
     {
     $command = array(
@@ -319,9 +318,9 @@ function key_play($ip, $password)
         "unicode" => 114,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_stop($ip, $password)
     {
     $command = array(
@@ -332,9 +331,9 @@ function key_stop($ip, $password)
         "unicode" => 115,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_size($ip, $password)
     {
     $command = array(
@@ -345,9 +344,9 @@ function key_size($ip, $password)
         "unicode" => 11,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_reload($ip, $password)
     {
     $command = array(
@@ -358,9 +357,9 @@ function key_reload($ip, $password)
         "unicode" => 116,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_1($ip, $password)
     {
     $command = array(
@@ -371,9 +370,9 @@ function key_1($ip, $password)
         "unicode" => 1,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_2($ip, $password)
     {
     $command = array(
@@ -384,9 +383,9 @@ function key_2($ip, $password)
         "unicode" => 2,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_3($ip, $password)
     {
     $command = array(
@@ -397,9 +396,9 @@ function key_3($ip, $password)
         "unicode" => 3,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_4($ip, $password)
     {
     $command = array(
@@ -410,9 +409,9 @@ function key_4($ip, $password)
         "unicode" => 4,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_5($ip, $password)
     {
     $command = array(
@@ -423,9 +422,9 @@ function key_5($ip, $password)
         "unicode" => 5,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_6($ip, $password)
     {
     $command = array(
@@ -436,9 +435,9 @@ function key_6($ip, $password)
         "unicode" => 6,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_7($ip, $password)
     {
     $command = array(
@@ -449,9 +448,9 @@ function key_7($ip, $password)
         "unicode" => 7,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_8($ip, $password)
     {
     $command = array(
@@ -462,9 +461,9 @@ function key_8($ip, $password)
         "unicode" => 8,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_9($ip, $password)
     {
     $command = array(
@@ -475,9 +474,9 @@ function key_9($ip, $password)
         "unicode" => 9,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_0($ip, $password)
     {
     $command = array(
@@ -488,9 +487,9 @@ function key_0($ip, $password)
         "unicode" => 0,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_home($ip, $password)
     {
     $command = array(
@@ -501,9 +500,9 @@ function key_home($ip, $password)
         "unicode" => 27,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_ok($ip, $password)
     {
     $command = array(
@@ -514,9 +513,9 @@ function key_ok($ip, $password)
         "unicode" => 13,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_volumedown($ip, $password)
     {
     $command = array(
@@ -527,9 +526,9 @@ function key_volumedown($ip, $password)
         "unicode" => 45,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 function key_volumeup($ip, $password)
     {
     $command = array(
@@ -540,7 +539,7 @@ function key_volumeup($ip, $password)
         "unicode" => 43,
         "action" => "press"
     );
-    $answer = send_command($ip, $command, $password);
+    $answer = $this->send_command($ip, $command, $password);
     return $answer;
-    };
+    }
 }
