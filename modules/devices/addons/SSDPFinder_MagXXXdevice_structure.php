@@ -79,5 +79,8 @@ $this->device_types['MagXXXdevice'] = array(
             'F2'=>array('DESCRIPTION'=>'F2'),
             'F3'=>array('DESCRIPTION'=>'F3'),
             'F4'=>array('DESCRIPTION'=>'F4'),
+            'turnOn'=>array('DESCRIPTION'=>'turnOn'),
+            'turnOff'=>array('DESCRIPTION'=>'turnOff'),
+            'switch'=>array('DESCRIPTION'=>'Switch'),
         )
 );
