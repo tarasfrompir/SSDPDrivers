@@ -3,65 +3,52 @@
  <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
 	<style>
-		.string
-		{
-			float:left;
-			width:400px;
-	}
-	   .container
-	   {
-			float:left;
-			width:200px;
-	   }
-	   
-	   .clear
-	   {
-			clear:both;
-			margin-top:15px;
-	   }
-
-	   input[type="text"]
-	   {
-			width:180px;
-	   }
-	   
-	   input[type="nameoffiles"]
-	   {
-			width:177px;
-	   }
-	   
-	   select
-	   {
-			width:184px;
-	   }
 	</style>
 </head>
 <body>
-<div name="%.object_title%" style="width:344px; text-align:center; align:center; font-family: monospace; border: 3px solid #4682B4; border-radius: 10px;">
+<div name="%.object_title%" style="width:378px; height: 180px; text-align:center; align:center; font-family: monospace; border: 3px solid #4682B4; border-radius: 10px;">
 <!--- название обьекта --->
  <p><img src="%.Logo%" alt="Логотип" style="width:36px; "></img>
-    <button style='display:%.alive|"none;block;none;"%;float:right;font-size: 50%; font-family: monospace;'><span class="glyphicon glyphicon-ok"></span></span></button>
-    <button style='display:%.alive|"block;none;block;"%;float:right;font-size: 50%; font-family: monospace;'><span class="glyphicon glyphicon-remove"></span></button>
-    %.object_description%
+   %.object_description%
  </p>
- <div name="buttons" style="width:310px; height: 45px; ">
-<!--- регулировка звука --->
- <input type="range" onChange='ajaxSetGlobal("%.object_title%.volume", value);' value=%.volume%  min="0" max="100" step="5" style="width:100%; height: 15px; display: inline-block;" ></input>  
-<!--- кнопка воспроизведения урла --->
- <button style='float:left;width:80px;height: 34px;' onClick='ajaxSetGlobal("%.object_title%.playUrl", document.getElementById("play_url").value);' class="btn btn-custom"><span value="" title="Play" id="play" class="glyphicon glyphicon-play aligned">PlayUrl</span></button> 
-  <!--- остальные кнопки--->
- <button style='display:%.pause_unpause|"block;none"%; float:left; width:46px;height: 34px;' onClick='ajaxSetGlobal("%.object_title%.pause_unpause", 1);' class="btn btn-custom"><span title="Pause" id="pause" class="glyphicon glyphicon-pause aligned"></span></button>
- <button style='display:%.pause_unpause|"none;block"%; float:left;width:46px;height: 34px;' onClick='ajaxSetGlobal("%.object_title%.pause_unpause", 0);' class="btn btn-custom"><span title="UnPause" id="Unpause" class="glyphicon glyphicon-play aligned"></span></button>
- <button style='float:left;width:46px;height: 34px;' onclick='ajaxSetGlobal("%.object_title%.stop", 1);' class="btn btn-custom"><span title="Stop" id="stop" class="glyphicon glyphicon-stop aligned"></span></button> 
- <button style='display:%.mute_unmute|"block;none"%; float:left;width:46px;height: 34px;' onclick='ajaxSetGlobal("%.object_title%.mute_unmute", 1);' class="btn btn-custom"><span title="Mute" id="Mute" class="glyphicon glyphicon-volume-off aligned"></span></button> 
- <button style='display:%.mute_unmute|"none;block"%; float:left;width:46px;height: 34px;' onclick='ajaxSetGlobal("%.object_title%.mute_unmute", 0);' class="btn btn-custom"><span title="UnMute" id="UnMute" class="glyphicon glyphicon-volume-up aligned"></span></button>
- <button style='float:left;width:46px;height: 34px;' onclick='ajaxSetGlobal("%.object_title%.previous", 1)' class="btn btn-custom"><span title="previous" id="previous" class="glyphicon glyphicon-chevron-left aligned"></span></button> 
- <button style='float:left;width:46px;height: 34px;' onclick='ajaxSetGlobal("%.object_title%.next", 1)' class="btn btn-custom"><span title="next" id="next" class="glyphicon glyphicon-chevron-right aligned"></span></button> 
- <!-- пока нереализовано
- <button style='float:left;width:46px;height: 34px;' onclick="Backward5('music.mp3','audio');" class="btn btn-custom"><span title="-5 seconds" id="-5second" class="glyphicon glyphicon-fast-backward aligned"></span></button> 
- <button style='float:left;width:46px;height: 34px;' onclick="Forward5('music.mp3','audio');" class="btn btn-custom"><span title="+5 seconds" id="+5second" class="glyphicon glyphicon-fast-forward aligned"></span></button> 
- -->
- </div>
+ <div name="%.object_title%buttons" style="width:378px; ">
+  <button style='float:left;width:40px;height: 30px;' class="btn btn-danger" onClick='ajaxSetGlobal("%.object_title%.F1", 1);' >F1</button> 
+  <button style='float:left;width:40px;height: 30px;' class="btn btn-success" onClick='ajaxSetGlobal("%.object_title%.F2", 1);' >F2</button> 
+  <button style='float:left;width:40px;height: 30px;' class="btn btn-warning" onClick='ajaxSetGlobal("%.object_title%.F3", 1);' >F3</button> 
+  <button style='float:left;width:40px;height: 30px;' class="btn btn-primary" onClick='ajaxSetGlobal("%.object_title%.F4", 1);' >F4</button> 
+  <button style='float:left;width:40px;height: 30px;' class="btn btn-primary" onClick='ajaxSetGlobal("%.object_title%.mute_unmute", 1);' ><i class="glyphicon glyphicon-volume-off"></i></button> 
+  <button style='float:left;width:40px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.setting", 1);' ><i class="glyphicon glyphicon-asterisk"></i></button> 
+  <button style='float:left;width:48px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.app", 1);' >APP</button> 
+  <button style='float:left;width:42px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.tv", 1);' >TV</button> 
+  <button style='float:left;width:40px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.audiomode", 1);' ><i class="glyphicon glyphicon-bullhorn"></i></button> 
+
+  <button style='float:left;width:37px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.1", 1);' >1</button> 
+  <button style='float:left;width:37px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.2", 1);' >2</button> 
+  <button style='float:left;width:37px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.3", 1);' >3</button> 
+  <button style='float:left;width:37px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.4", 1);' >4</button> 
+  <button style='float:left;width:37px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.5", 1);' >5</button> 
+  <button style='float:left;width:37px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.6", 1);' >6</button> 
+  <button style='float:left;width:37px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.7", 1);' >7</button>   
+  <button style='float:left;width:37px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.8", 1);' >8</button> 
+  <button style='float:left;width:37px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.9", 1);' >9</button> 
+  <button style='float:left;width:37px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.0", 1);' >0</button> 
+
+  <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.volumeup", 1);' > <i class="glyphicon glyphicon-volume-up"></i></volumedownbutton> 
+  <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.volumedown", 1);' > <i class="glyphicon glyphicon-volume-down"></i></button> 
+  <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.guide", 1);' ><i class="glyphicon glyphicon-pencil"></i></button> 
+  <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.home", 1);' ><i class="glyphicon glyphicon-home"></i></button> 
+  <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.info", 1);' ><i class="glyphicon glyphicon-info-sign"></i></button> 
+  <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.menu", 1);' ><i class="glyphicon glyphicon-th-list"></i></button> 
+  <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.ok", 1);' ><i class="glyphicon glyphicon-ok"></i></button> 
+
+  <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.play", 1);' > <i class="glyphicon glyphicon-play"></i></volumedownbutton> 
+  <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.stop", 1);' > <i class="glyphicon glyphicon-stop"></i></button> 
+  <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.next", 1);' ><i class="glyphicon glyphicon-step-forward"></i></button> 
+  <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.previous", 1);' ><i class="glyphicon glyphicon-step-backward"></i></button> 
+  <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.pause", 1);' ><i class="glyphicon glyphicon-pause"></i></button> 
+  <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.seekprevious", 1);' ><i class="glyphicon glyphicon-fast-backward"></i></button> 
+  <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.seeknext", 1);' ><i class="glyphicon glyphicon-fast-forward"></i></button> 
+  </div>  
 </div> 
 
  </body>
