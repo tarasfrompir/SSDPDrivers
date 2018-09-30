@@ -12,7 +12,6 @@
 <script>
 // берем значение свойства пассворд обьекта
 var pas = document.getElementById("%.object_title%.pas").value;
-console.log(pas); // выведет "1" 
 if (pas == '') {
    document.getElementById('%.object_title%.afterlogo').innerHTML='<p style="color:red;">ВВЕДИТЕ ПАРОЛЬ ДЛЯ ТЕКУЩЕГО УСТРОЙСТВА ЧТОБЫ МОЖНО БЫЛО ИМ УПРАВЛЯТЬ</p><input type="text" name="%.object_title%.password" value="%.password%" onmouseout=\'ajaxSetGlobal("%.object_title%.password", value); \'></input>';
 } else {
