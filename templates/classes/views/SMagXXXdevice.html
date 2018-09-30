@@ -1,17 +1,26 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
- <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-	<style>
-	</style>
-</head>
-<body>
-<div name="%.object_title%" style="width:378px; height: 180px; text-align:center; align:center; font-family: monospace; border: 3px solid #4682B4; border-radius: 10px;">
-<!--- название обьекта --->
- <p><img src="%.Logo%" alt="Логотип" style="width:36px; "></img>
+<div id="%.object_title%" style="width:378px; height: 180px; text-align:center; align:center; font-family: monospace; border: 3px solid #4682B4; border-radius: 10px;">
+<!-- получаем значение свойствайство обекта пассворд для скрипта ниже -->
+<input type="hidden" id="%.object_title%.pas" value="%.password%"></input>
+
+<!-- название обьекта -->
+ <p><img src="%.Logo%" alt="Логотип" style="width:36px;"></img>
    %.object_description%
  </p>
- <div name="%.object_title%buttons" style="width:378px; ">
+
+<div id="%.object_title%.afterlogo"></div>
+ 
+<script>
+// берем значение свойства пассворд обьекта
+var pas = document.getElementById("%.object_title%.pas").value;
+console.log(pas); // выведет "1" 
+if (pas == '') {
+   document.getElementById('%.object_title%.afterlogo').innerHTML='<p style="color:red;">ВВЕДИТЕ ПАРОЛЬ ДЛЯ ТЕКУЩЕГО УСТРОЙСТВА ЧТОБЫ МОЖНО БЫЛО ИМ УПРАВЛЯТЬ</p><input type="text" name="%.object_title%.password" value="%.password%" onmouseout=\'ajaxSetGlobal("%.object_title%.password", value); \'></input>';
+} else {
+    document.getElementById("%.object_title%buttons").style.display = "block";
+};
+</script>
+
+  <div style="display: none;" id="%.object_title%buttons" style="width:378px; ">
   <button style='float:left;width:40px;height: 30px;' class="btn btn-danger" onClick='ajaxSetGlobal("%.object_title%.F1", 1);' >F1</button> 
   <button style='float:left;width:40px;height: 30px;' class="btn btn-success" onClick='ajaxSetGlobal("%.object_title%.F2", 1);' >F2</button> 
   <button style='float:left;width:40px;height: 30px;' class="btn btn-warning" onClick='ajaxSetGlobal("%.object_title%.F3", 1);' >F3</button> 
@@ -33,7 +42,7 @@
   <button style='float:left;width:37px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.9", 1);' >9</button> 
   <button style='float:left;width:37px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.0", 1);' >0</button> 
 
-  <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.volumeup", 1);' > <i class="glyphicon glyphicon-volume-up"></i></volumedownbutton> 
+  <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.volumeup", 1);' > <i class="glyphicon glyphicon-volume-up"></i></button> 
   <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.volumedown", 1);' > <i class="glyphicon glyphicon-volume-down"></i></button> 
   <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.guide", 1);' ><i class="glyphicon glyphicon-pencil"></i></button> 
   <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.home", 1);' ><i class="glyphicon glyphicon-home"></i></button> 
@@ -41,7 +50,7 @@
   <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.menu", 1);' ><i class="glyphicon glyphicon-th-list"></i></button> 
   <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.ok", 1);' ><i class="glyphicon glyphicon-ok"></i></button> 
 
-  <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.play", 1);' > <i class="glyphicon glyphicon-play"></i></volumedownbutton> 
+  <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.play", 1);' > <i class="glyphicon glyphicon-play"></i></button> 
   <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.stop", 1);' > <i class="glyphicon glyphicon-stop"></i></button> 
   <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.next", 1);' ><i class="glyphicon glyphicon-step-forward"></i></button> 
   <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.previous", 1);' ><i class="glyphicon glyphicon-step-backward"></i></button> 
@@ -50,6 +59,3 @@
   <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.seeknext", 1);' ><i class="glyphicon glyphicon-fast-forward"></i></button> 
   </div>  
 </div> 
-
- </body>
-</html>
