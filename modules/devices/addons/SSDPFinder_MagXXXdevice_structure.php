@@ -41,6 +41,10 @@ $this->device_types['MagXXXdevice'] = array(
             'stop'=>array('DESCRIPTION'=>'Stop key', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'stop', 'DATA_KEY'=>1), 
             'home'=>array('DESCRIPTION'=>'Home key', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'home', 'DATA_KEY'=>1),  
             'ok'=>array('DESCRIPTION'=>'Ok key', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'ok', 'DATA_KEY'=>1),  
+            'up'=>array('DESCRIPTION'=>'UP key', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'up', 'DATA_KEY'=>1),  
+            'down'=>array('DESCRIPTION'=>'DOWN key', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'down', 'DATA_KEY'=>1),  
+            'left'=>array('DESCRIPTION'=>'LEFT key', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'left', 'DATA_KEY'=>1),  
+            'right'=>array('DESCRIPTION'=>'RIGHT key', 'KEEP_HISTORY'=>1, 'ONCHANGE'=>'rigth', 'DATA_KEY'=>1),  
         ),
         'METHODS'=>array(
             'home'=>array('DESCRIPTION'=>'Home key'),
@@ -82,5 +86,10 @@ $this->device_types['MagXXXdevice'] = array(
             'turnOn'=>array('DESCRIPTION'=>'turnOn'),
             'turnOff'=>array('DESCRIPTION'=>'turnOff'),
             'switch'=>array('DESCRIPTION'=>'Switch'),
+            'up'=>array('DESCRIPTION'=>'key UP'),
+            'down'=>array('DESCRIPTION'=>'key DOWN'),
+            'left'=>array('DESCRIPTION'=>'key LEFT'),
+            'rigth'=>array('DESCRIPTION'=>'key RIGTH'),
+
         )
 );
