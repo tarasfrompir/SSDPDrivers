@@ -9,16 +9,14 @@
 
 <div id="%.object_title%.afterlogo"></div>
  
-<script>
-// берем значение свойства пассворд обьекта
-var pas = document.getElementById("%.object_title%.pas").value;
-if (pas == '') {
-   document.getElementById('%.object_title%.afterlogo').innerHTML='<p style="color:red;">ВВЕДИТЕ ПАРОЛЬ ДЛЯ ТЕКУЩЕГО УСТРОЙСТВА ЧТОБЫ МОЖНО БЫЛО ИМ УПРАВЛЯТЬ</p><input type="text" name="%.object_title%.password" value="%.password%" onmouseout=\'ajaxSetGlobal("%.object_title%.password", value); \'></input>';
-} else {
-    document.getElementById("%.object_title%buttons").style.display = "block";
-};
-</script>
+<!-- запрос пароля -->
+ <div style="display: none;" id="%.object_title%chekpass">
+  <p style="color:red;">ВВЕДИТЕ ПАРОЛЬ ДЛЯ ТЕКУЩЕГО УСТРОЙСТВА ЧТОБЫ МОЖНО БЫЛО ИМ УПРАВЛЯТЬ. </p>
+  <p style="color:red;">ПАРОЛЬ ВВОДИТСЯ В НАСТРОЙКАХ ВАШЕГО УСТРОЙСТВА </p>
+  <input type="text" name="%.object_title%.password" value="%.password%" onmouseout='ajaxSetGlobal("%.object_title%.password", value);location.reload();'></input>
+</div>
 
+  <!-- основной обьект -->
   <div style="display: none;" id="%.object_title%buttons" style="width:378px; ">
   <button style='float:left;width:40px;height: 30px;' class="btn btn-danger" onClick='ajaxSetGlobal("%.object_title%.F1", 1);' >F1</button> 
   <button style='float:left;width:40px;height: 30px;' class="btn btn-success" onClick='ajaxSetGlobal("%.object_title%.F2", 1);' >F2</button> 
@@ -57,4 +55,13 @@ if (pas == '') {
   <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.seekprevious", 1);' ><i class="glyphicon glyphicon-fast-backward"></i></button> 
   <button style='float:left;width:52px;height: 30px;' class="btn btn-default" onClick='ajaxSetGlobal("%.object_title%.seeknext", 1);' ><i class="glyphicon glyphicon-fast-forward"></i></button> 
   </div>  
+ <script>
+  // берем значение свойства пассворд обьекта
+  var pas = document.getElementById("%.object_title%.pas").value;
+  if (pas == '') {
+     document.getElementById("%.object_title%chekpass").style.display = "block";
+  } else {
+     document.getElementById("%.object_title%buttons").style.display = "block";
+  };
+ </script>
 </div> 
