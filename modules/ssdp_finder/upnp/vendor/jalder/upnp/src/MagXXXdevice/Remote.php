@@ -542,4 +542,56 @@ function key_volumeup($ip, $password)
     $answer = $this->send_command($ip, $command, $password);
     return $answer;
     }
+function key_up($ip, $password)
+    {
+    $command = array(
+        "msgType" => "keyboardKey",
+        "action" => "press",
+        "metaState" => 0,
+        "keycode" => 16777235,
+        "unicode" => 38,
+        "action" => "press"
+    );
+    $answer = $this->send_command($ip, $command, $password);
+    return $answer;
+    }
+function key_down($ip, $password)
+    {
+    $command = array(
+        "msgType" => "keyboardKey",
+        "action" => "press",
+        "metaState" => 0,
+        "keycode" => 16777237,
+        "unicode" => 40,
+        "action" => "press"
+    );
+    $answer = $this->send_command($ip, $command, $password);
+    return $answer;
+    }
+function key_left($ip, $password)
+    {
+    $command = array(
+        "msgType" => "keyboardKey",
+        "action" => "press",
+        "metaState" => 0,
+        "keycode" => 16777234,
+        "unicode" => 37,
+        "action" => "press"
+    );
+    $answer = $this->send_command($ip, $command, $password);
+    return $answer;
+    }
+function key_rigth($ip, $password)
+    {
+    $command = array(
+        "msgType" => "keyboardKey",
+        "action" => "press",
+        "metaState" => 0,
+        "keycode" => 16777236,
+        "unicode" => 39,
+        "action" => "press"
+    );
+    $answer = $this->send_command($ip, $command, $password);
+    return $answer;
+    }
 }
