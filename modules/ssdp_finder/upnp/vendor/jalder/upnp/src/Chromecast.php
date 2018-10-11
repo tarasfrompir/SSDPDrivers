@@ -1,9 +1,10 @@
 <?php
+namespace jalder\Upnp;
 // Chris Ridings
 // www.chrisridings.com
-require_once ("CCprotoBuf.php");
-require_once ("CCDefaultMediaPlayer.php");
-require_once ("CCPlexPlayer.php");
+//require_once ("CCprotoBuf.php");
+//require_once ("CCDefaultMediaPlayer.php");
+//require_once ("CCPlexPlayer.php");
 require_once ("mdns.php");
 
 class Chromecast
