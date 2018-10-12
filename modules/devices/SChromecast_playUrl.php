@@ -1,15 +1,15 @@
 <?php 
 require_once (dirname(__FILE__) . "/../ssdp_finder/upnp/vendor/jalder/upnp/src/Chromecast/Remote.php");
 
-$adress = $this->getProperty("ADDRESS");
-$port = $this->getProperty("MODEL");
+$adress = $this->getProperty("CONTROLADDRESS");
+$port = getport($adress);
 $ip = getIp($adress, false);
 $playUrl = $this->getProperty("playUrl");
 echo ($ip);
 
 // Create Chromecast object and give IP and Port
 
-$cc = new Chromecast($adress, $port);
+$cc = new Chromecast($ip, $port);
 
 if (preg_match('/\.mp3/', $playUrl))
     {
@@ -69,3 +69,16 @@ function getIp($baseUrl, $withPort)
 
     return $baseUrl;
     }
+/**
+* get port from url
+*
+* @access public
+*/
+ function getPort($address){
+  $baseUrl="";
+	if( !empty($address) ){
+        $parsed_url = parse_url($address);
+        $baseUrl = $parsed_url['port'];
+        }
+    return  $baseUrl;
+}
