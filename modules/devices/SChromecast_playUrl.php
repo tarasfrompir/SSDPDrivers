@@ -2,13 +2,14 @@
 require_once (dirname(__FILE__) . "/../ssdp_finder/upnp/vendor/jalder/upnp/src/Chromecast/Remote.php");
 
 $adress = $this->getProperty("ADDRESS");
+$port = $this->getProperty("MODEL");
 $ip = getIp($adress, false);
 $playUrl = $this->getProperty("playUrl");
 echo ($ip);
 
 // Create Chromecast object and give IP and Port
 
-$cc = new Chromecast($adress, "8009");
+$cc = new Chromecast($adress, $port);
 
 if (preg_match('/\.mp3/', $playUrl))
     {
