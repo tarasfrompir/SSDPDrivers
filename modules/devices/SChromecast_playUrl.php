@@ -5,9 +5,6 @@ $adress = $this->getProperty("CONTROLADDRESS");
 $port = getport($adress);
 $ip = getIp($adress, false);
 $playUrl = $this->getProperty("playUrl");
-var_dump ($ip);
-var_dump ($port);
-
 // Create Chromecast object and give IP and Port
 
 $cc = new Chromecast($ip, $port);
