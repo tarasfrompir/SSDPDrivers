@@ -51,6 +51,7 @@ class Remote
 			'CurrentURI'=>'<![CDATA['.$url.']]>',
 			'CurrentURIMetaData'=>''
 		);
+		echo (serialise($args));
 		$response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
 		$args = array('InstanceID'=>0,'Speed'=>1);
 		$this->sendRequestToDevice('Play',$args,$this->ctrlurl,$this->service_type);
