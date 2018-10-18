@@ -35,7 +35,7 @@ class Remote
                 } else {
                     $this->ctrlurl = ($this->upnp->baseUrl($control_url,True).'/'.$service->controlURL);
                 }
-                echo($service->controlURL);
+                echo($this->ctrlurl);
           }
     }
 }
