@@ -6,10 +6,8 @@ $renderer = new MediaRenderer();
 $adress = $this->getProperty("CONTROLADDRESS");
 echo ($adress);
 $remote = new MediaRenderer\Remote($adress);
-echo ($remote);
 $playUrl = $this->getProperty("playUrl");
 $services = $this->getProperty("Services");
-
 $info = $remote->getPosition();
 $doc = new \DOMDocument();
 $doc->loadXML($info);
