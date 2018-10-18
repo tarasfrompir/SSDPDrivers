@@ -53,7 +53,7 @@ class Remote
 		);
 		$response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
 		echo ('answer');
-		echo ('$response');
+		echo ($response);
 		$args = array('InstanceID'=>0,'Speed'=>1);
 		$this->sendRequestToDevice('Play',$args,$this->ctrlurl,$this->service_type);
 		return $response;
