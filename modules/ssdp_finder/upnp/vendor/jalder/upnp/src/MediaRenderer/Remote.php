@@ -41,16 +41,11 @@ class Remote
 }
 
 
-	public function play($url = "")
-    {
+	public function play($url = "") {
         if($url === ""){
             return self::unpause();
         }
-		$args = array(
-			'InstanceID'=>0,
-			'CurrentURI'=>'<![CDATA['.$url.']]>',
-			'CurrentURIMetaData'=>''
-		);
+		$args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>'');
 		$response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
 		echo ('answer');
 		echo ($response);
