@@ -26,7 +26,7 @@ class Remote
     libxml_use_internal_errors(true); 
     $xml = simplexml_load_string($content);
     foreach($xml->device->serviceList->service as $service){
-          if($service->serviceId == 'urn:upnp-org:serviceId:AVTransport'){
+          if($service->serviceId == 'urn:upnp-org:serviceId:AVTransport' or $service->serviceId == 'urn:schemas-upnp-org:serviceId:AVTransport'){
                 $chek_url = (substr($service->controlURL,0,1));
                 $this->service_type = ($service->serviceType);
                 if ($chek_url == '/') {
