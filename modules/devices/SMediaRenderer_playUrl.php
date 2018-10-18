@@ -4,6 +4,7 @@ use jalder\Upnp\MediaRenderer;
 $renderer = new MediaRenderer();
 
 $adress = $this->getProperty("CONTROLADDRESS");
+echo ($adress);
 $remote = new MediaRenderer\Remote($adress);
 echo ($remote);
 $playUrl = $this->getProperty("playUrl");
