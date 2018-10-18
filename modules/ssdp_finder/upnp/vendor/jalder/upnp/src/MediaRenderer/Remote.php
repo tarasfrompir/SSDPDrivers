@@ -183,12 +183,12 @@ private function sendRequestToDevice($method, $arguments, $url, $type, $hostIp =
         $body .='</s:Envelope>';
         echo ($body);
         $header = array(
-			'Host: '.$hostIp.':'.$hostPort,
+	    'Host: '.$hostIp.':'.$hostPort,
             'User-Agent: '.$this->user_agent, //fudge the user agent to get desired video format
             'Content-Length: ' . strlen($body),
-			'Connection: close',
+	    'Connection: close',
             'Content-Type: text/xml; charset="utf-8"',
-			'SOAPAction: "'.$this->service_type.'#'.$method.'"',
+	    'SOAPAction: "'.$this->service_type.'#'.$method.'"',
         );
 
         $ch = curl_init();
