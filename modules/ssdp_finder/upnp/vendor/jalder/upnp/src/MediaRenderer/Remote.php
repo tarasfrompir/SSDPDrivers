@@ -179,9 +179,9 @@ private function sendRequestToDevice($method, $arguments, $url, $type, $hostIp =
         $body .='</u:'.$method.'>';
         $body .='</s:Body>';
         $body .='</s:Envelope>';
- 
+        echo ($body);
         $header = array(
-			'Host: '.$this->getLocalIp().':'.$hostPort,
+			'Host: '.$hostIp.':'.$hostPort,
             'User-Agent: '.$this->user_agent, //fudge the user agent to get desired video format
             'Content-Length: ' . strlen($body),
 			'Connection: close',
@@ -206,9 +206,4 @@ private function sendRequestToDevice($method, $arguments, $url, $type, $hostIp =
         }
         return $response;
     }
-//получаем hostname адрес локального компьютера
-    private function getLocalIp() { 
-      return gethostbyname(trim(`hostname`)); 
-    }
-
 }
