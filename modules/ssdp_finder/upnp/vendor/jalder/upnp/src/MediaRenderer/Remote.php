@@ -29,13 +29,11 @@ class Remote
           if($service->serviceId == 'urn:upnp-org:serviceId:AVTransport'){
                 $chek_url = (substr($service->controlURL,0,1));
                 $this->service_type = ($service->serviceType);
-                echo($service->serviceType);
                 if ($chek_url == '/') {
                    $this->ctrlurl = ($this->upnp->baseUrl($control_url,True).$service->controlURL);
                 } else {
                     $this->ctrlurl = ($this->upnp->baseUrl($control_url,True).'/'.$service->controlURL);
                 }
-                echo($this->ctrlurl);
           }
     }
 }
@@ -176,7 +174,6 @@ private function sendRequestToDevice($method, $arguments, $url, $type, $hostIp =
         $body .='</u:'.$method.'>';
         $body .='</s:Body>';
         $body .='</s:Envelope>';
-        echo ($body);
         $header = array(
 	    'Host: '.$hostIp.':'.$hostPort,
             'User-Agent: '.$this->user_agent, //fudge the user agent to get desired video format
