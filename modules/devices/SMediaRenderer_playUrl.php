@@ -20,6 +20,8 @@ print ($trackurl);
 $result = $doc->getElementsByTagName('RelTime');
 $tracktime = $result->item(0)->nodeValue;
 print ($tracktime); 
+print ($playUrl); 
+print ($adress); 
 if (strpos($playUrl,'youtube')>1 AND strpos($playUrl,'youtube')<20) {
     $res1=parse_url($playUrl, PHP_URL_QUERY);
     $res2=parse_str($res1,$res); 
