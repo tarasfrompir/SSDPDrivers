@@ -58,7 +58,7 @@ class Remote
     public function setNext($url)
 	{
 		$args = array(
-			'InstanceID'=>0,
+			'InstanceID'=>1,
 			'NextURI'=>'<![CDATA['.$url.']]>',
 			'NextURIMetaData'=>'testmetadata'
 		);
