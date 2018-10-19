@@ -71,7 +71,7 @@ class Chromecast
 		$mdns->query("_googlecast._tcp.local", 1, 12, "");
 		$mdns->query("_googlecast._tcp.local", 1, 12, "");
 		$mdns->query("_googlecast._tcp.local", 1, 12, "");
-		echo ($mdns->query("_googlecast._tcp.local", 1, 12, ""));
+		print_r ($mdns->query("_googlecast._tcp.local", 1, 12, ""));
 		DebMes ($mdns->query("_googlecast._tcp.local", 1, 12, ""));
 		$cc = $wait;
 		$filetoget = 1;
@@ -82,7 +82,7 @@ class Chromecast
 			$inpacket = "";
 			while ($inpacket == "") {
 				$inpacket = $mdns->readIncoming();
-				echo ($inpacket);
+				print_r ($inpacket);
 				DebMes('InPaket - '.$inpacket);
 				if ($inpacket <> "") {
 					if ($inpacket->packetheader->getQuestions() > 0) {
