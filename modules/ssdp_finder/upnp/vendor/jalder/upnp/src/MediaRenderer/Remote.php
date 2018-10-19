@@ -47,7 +47,7 @@ class Remote
         if($url === ""){
             return self::unpause();
         }
-		$args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>'');
+		$args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>'); //, 'CurrentURIMetaData'=>''
 		$response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
 		echo ('answer');
 		echo ($response);
@@ -166,7 +166,7 @@ class Remote
 		$response = $this->sendRequestToDevice('Seek',$args,$this->ctrlurl.'serviceControl/AVTransport','AVTransport');
 		return $response['s:Body']['u:SeekResponse'];
 	}
-private function sendRequestToDevice($method, $arguments, $url, $type, $hostIp = '192.168.1.142', $hostPort = '8080')
+private function sendRequestToDevice($method, $arguments, $url, $type, $hostIp = '127.0.0.1', $hostPort = '80')
     {
         $body  ='<?xml version="1.0" encoding="utf-8"?>' . "\r\n";
         $body .='<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
@@ -188,16 +188,8 @@ private function sendRequestToDevice($method, $arguments, $url, $type, $hostIp =
         );
 
         $ch = curl_init();
-	 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-  //curl_setopt($ch, CURLOPT_URL, $POST_url);
-  //curl_setopt($ch, CURLOPT_HEADER, 0);
-  //curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-  //curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: text/xml", "SOAPAction: ".$SOAP_service."#".$SOAP_action));
-  //curl_setopt($ch, CURLOPT_POST, 1);
-  //curl_setopt($ch, CURLOPT_POSTFIELDS, $POST_xml);
-	
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt( $ch, CURLOPT_HTTPHEADER, $header );
         curl_setopt( $ch, CURLOPT_HEADER, 0);
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
