@@ -25,9 +25,10 @@ class Remote
     $content = curl_exec($ch);
     libxml_use_internal_errors(true); 
     $xml = simplexml_load_string($content);
-	  var_dump ($xml);
-	  $sec = file_get_contents('http://192.168.1.142:8080/ConnectionManager/desc.xml');
-          var_dump($sec);
+    $sec = file_get_contents('http://192.168.1.142:8080/ConnectionManager/desc.xml');
+    var_dump($sec);
+    var_dump ($xml);
+	   
     foreach($xml->device->serviceList->service as $service){
           if($service->serviceId == 'urn:upnp-org:serviceId:AVTransport'){
                 $chek_url = (substr($service->controlURL,0,1));
