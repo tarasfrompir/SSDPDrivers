@@ -86,9 +86,7 @@ class Remote
 
 	private function instanceOnly($command,$type = 'AVTransport', $id = 0)
 	{
-		$args = array(
-			'InstanceID'=>$id
-		);
+		$args = array('InstanceID'=>$id);
 		$response = $this->sendRequestToDevice($command,$args,$this->ctrlurl,$this->service_type);
         return $response;
 	}
@@ -158,8 +156,7 @@ class Remote
         }
 		$args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>'');  
 		$response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
-		echo ('answer');
-		echo ($response);
+
 		$args = array('InstanceID'=>0,'Speed'=>1);
 		$this->sendRequestToDevice('Play',$args,$this->ctrlurl,$this->service_type);
 		return $response;
@@ -171,8 +168,6 @@ class Remote
         $body .='<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
         $body .='<s:Body>';
         $body .='<u:'.$method.' xmlns:u="'.$this->service_type.'">';
-		echo ('metod '.$method);
-		echo ('types '.$this->service_type);
         foreach( $arguments as $arg=>$value ) {
             $body .='<'.$arg.'>'.$value.'</'.$arg.'>';
         }
@@ -204,7 +199,6 @@ class Remote
         $result = $doc->getElementsByTagName('Result');
 	
         if(is_object($result->item(0))){
-		echo ('resultat - '.$result->item(0)->nodeValue);
             return $result->item(0)->nodeValue;
         }
         return $response;
