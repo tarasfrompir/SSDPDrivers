@@ -8,4 +8,5 @@ $remote = new MediaRenderer\Remote($adress);
 $playUrl = $this->getProperty("playUrl");
 $result = $remote->stop();
 $result = $remote->play($playUrl);
-echo($result);
+echo('Result - '.$result);
+echo($playUrl);
