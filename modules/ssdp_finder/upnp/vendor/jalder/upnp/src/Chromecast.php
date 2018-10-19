@@ -30,6 +30,12 @@ class Chromecast
 	public $lastactivetime;
 	// store the time we last did something
 	
+	function cl_print_r ($var, $label = '')
+{
+	$str = json_encode(print_r ($var, true));
+	echo "<script>console.group('".$label."');console.log('".$str."');console.groupEnd();</script>";
+}
+	
 	public function __construct($ip, $port)
 	{
 		// Establish Chromecast connection
@@ -70,8 +76,8 @@ class Chromecast
 		$starttime = round(microtime(true) * 1000);
 		$mdns->query("_googlecast._tcp.local", 1, 12, "");
 		$mdns->query("_googlecast._tcp.local", 1, 12, "");
-		$a = $mdns->query("_googlecast._tcp.local", 1, 12, "");
-		var_dump ($a);
+		$mas = $mdns->query("_googlecast._tcp.local", 1, 12, "");
+		cl_print_r($mas, '$mas log cl_print_r');
 		$cc = $wait;
 		$filetoget = 1;
 		$dontrequery = 0;
