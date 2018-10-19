@@ -70,9 +70,8 @@ class Chromecast
 		$lastpackettime = - 1;
 		$starttime = round(microtime(true) * 1000);
 		$mdns->query("_googlecast._tcp.local", 1, 12, "");
-		$mdns->query("_googlecast._tcp.local", 1, 12, "");
-		$mas = $mdns->query("_googlecast._tcp.local", 1, 12, "");
-		cl_print_r($mas, '$mas log cl_print_r');
+		//$mdns->query("_googlecast._tcp.local", 1, 12, "");
+		//$mdns->query("_googlecast._tcp.local", 1, 12, "");
 		$cc = $wait;
 		$filetoget = 1;
 		$dontrequery = 0;
