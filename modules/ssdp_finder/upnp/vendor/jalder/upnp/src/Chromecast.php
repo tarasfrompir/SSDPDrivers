@@ -71,7 +71,6 @@ class Chromecast
 		$starttime = round(microtime(true) * 1000);
 		$mdns->query("_googlecast._tcp.local", 1, 12, "");
 		//$mdns->query("_googlecast._tcp.local", 1, 12, "");
-		//$mdns->query("_googlecast._tcp.local", 1, 12, "");
 		$cc = $wait;
 		$filetoget = 1;
 		$dontrequery = 0;
