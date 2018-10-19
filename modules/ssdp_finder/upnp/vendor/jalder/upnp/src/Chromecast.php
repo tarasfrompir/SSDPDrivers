@@ -71,7 +71,7 @@ class Chromecast
 		$mdns->query("_googlecast._tcp.local", 1, 12, "");
 		$mdns->query("_googlecast._tcp.local", 1, 12, "");
 		$a = $mdns->query("_googlecast._tcp.local", 1, 12, "");
-		console_log('$a',$a);
+		var_dump ($a);
 		$cc = $wait;
 		$filetoget = 1;
 		$dontrequery = 0;
