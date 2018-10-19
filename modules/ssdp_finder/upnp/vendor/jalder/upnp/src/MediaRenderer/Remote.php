@@ -202,6 +202,7 @@ class Remote
         $doc = new \DOMDocument();
         $doc->loadXML($response);
         $result = $doc->getElementsByTagName('Result');
+		echo ('resultat - '.$result);
         if(is_object($result->item(0))){
             return $result->item(0)->nodeValue;
         }
