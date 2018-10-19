@@ -40,18 +40,6 @@ class Remote
 }
 
 
-	public function play($url = "") {
-        if($url === ""){
-            return self::unpause();
-        }
-		$args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>'');  
-		$response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
-		echo ('answer');
-		echo ($response);
-		$args = array('InstanceID'=>0,'Speed'=>1);
-		$this->sendRequestToDevice('Play',$args,$this->ctrlurl,$this->service_type);
-		return $response;
-	}
     public function setNext($url)
 	{
 		$args = array(
@@ -163,12 +151,28 @@ class Remote
 		$response = $this->sendRequestToDevice('Seek',$args,$this->ctrlurl.'serviceControl/AVTransport','AVTransport');
 		return $response['s:Body']['u:SeekResponse'];
 	}
-private function sendRequestToDevice($method, $arguments, $url, $type, $hostIp = '127.0.0.1', $hostPort = '80')
-    {
+	
+		public function play($url = "") {
+        if($url === ""){
+            return self::unpause();
+        }
+		$args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>'');  
+		$response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
+		echo ('answer');
+		echo ($response);
+		$args = array('InstanceID'=>0,'Speed'=>1);
+		$this->sendRequestToDevice('Play',$args,$this->ctrlurl,$this->service_type);
+		return $response;
+	}
+	
+        private function sendRequestToDevice($method, $arguments, $url, $type, $hostIp = '127.0.0.1', $hostPort = '80')
+        {
         $body  ='<?xml version="1.0" encoding="utf-8"?>' . "\r\n";
         $body .='<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
         $body .='<s:Body>';
         $body .='<u:'.$method.' xmlns:u="'.$this->service_type.'">';
+		echo ('metod '.$method);
+		echo ('types '.$this->service_type);
         foreach( $arguments as $arg=>$value ) {
             $body .='<'.$arg.'>'.$value.'</'.$arg.'>';
         }
