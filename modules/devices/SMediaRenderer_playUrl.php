@@ -5,7 +5,6 @@ $renderer = new MediaRenderer();
 
 $adress = $this->getProperty("CONTROLADDRESS");
 $remote = new MediaRenderer\Remote($adress);
-echo ($remote);
 $playUrl = $this->getProperty("playUrl");
 $result = $remote->stop();
 $result = $remote->play($playUrl);
