@@ -166,7 +166,7 @@ class Remote
 		$response = $this->sendRequestToDevice('Seek',$args,$this->ctrlurl.'serviceControl/AVTransport','AVTransport');
 		return $response['s:Body']['u:SeekResponse'];
 	}
-private function sendRequestToDevice($method, $arguments, $url, $type, $hostIp = '127.0.0.1', $hostPort = '80')
+private function sendRequestToDevice($method, $arguments, $url, $type, $hostIp = '192.168.1.142', $hostPort = '8080')
     {
         $body  ='<?xml version="1.0" encoding="utf-8"?>' . "\r\n";
         $body .='<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
