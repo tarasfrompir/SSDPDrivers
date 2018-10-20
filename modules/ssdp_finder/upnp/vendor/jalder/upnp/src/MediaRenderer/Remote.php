@@ -41,23 +41,23 @@ class Remote {
     }
 }
 
-
-    public function setNext($url) {
-        $args = array(
+public function setNext($url) {
+  $tags = get_meta_tags($url);
+  $args = array(
             'InstanceID'=>0,
             'NextURI'=>'<![CDATA['.$url.']]>',
             'NextURIMetaData'=>'testmetadata'
-        );
-        return $this->sendRequestToDevice('SetNextAVTransportURI',$args,$this->ctrlurl,$this->service_type);
-        }
+            );
+   return $this->sendRequestToDevice('SetNextAVTransportURI',$args,$this->ctrlurl,$this->service_type);
+   }
 
   public function getState() {
     return $this->instanceOnly('GetTransportInfo');
   }
 
-    public function getPosition() {
-        return $this->instanceOnly('getPositionInfo');
-    }
+ public function getPosition() {
+     return $this->instanceOnly('getPositionInfo');
+     }
 
     private function instanceOnly($command,$type = 'AVTransport', $id = 0) {
         $args = array('InstanceID'=>$id);
@@ -119,7 +119,7 @@ class Remote {
         $tags = get_meta_tags($url);
         $args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>'<DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" 
                xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" 
-               xmlns:dlna="urn:schemas-dlna-org:metadata-1-0/"><item><dc:title>'.$tags['title'].'</dc:title></item></DIDL-Lite>",');  
+               xmlns:dlna="urn:schemas-dlna-org:metadata-1-0/"><item><dc:title>'.$tags['title'].'</dc:title></item></DIDL-Lite>"');  
         $response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
         $args = array('InstanceID'=>0,'Speed'=>1);
         $this->sendRequestToDevice('Play',$args,$this->ctrlurl,$this->service_type);
@@ -137,9 +137,6 @@ private function sendRequestToDevice($method, $arguments, $url, $type) {
     $body .='</u:'.$method.'>';
     $body .='</s:Body>';
     $body .='</s:Envelope>';
-    print_r ('body '.$body);
-    var_dump ('method '.$method);
-    var_dump ('ST '.$this->service_type);
     $header = array(
         'Host: '.$this->ip.':'.$this->port,
         'User-Agent: '.$this->user_agent, //fudge the user agent to get desired video format
@@ -157,12 +154,10 @@ private function sendRequestToDevice($method, $arguments, $url, $type) {
     curl_setopt( $ch, CURLOPT_POSTFIELDS, $body );
     $response = curl_exec( $ch );
     curl_close( $ch );
-    echo($response);
     $doc = new \DOMDocument();
     $doc->loadXML($response);
     $result = $doc->getElementsByTagName('Result');
     if(is_object($result->item(0))){
-        var_dump($result->item(0)->nodeValue);        
         return $result->item(0)->nodeValue;
     }
     return $response;
