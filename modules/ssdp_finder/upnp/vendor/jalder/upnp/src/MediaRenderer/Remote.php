@@ -34,10 +34,8 @@ class Remote {
                 $this->service_type = ($service->serviceType);
                 if ($chek_url == '/') {
                    $this->ctrlurl = ($url['scheme'].'://'.$url['host'].':'.$url['port'].$service->controlURL);
-		   var_dump ($this->ctrlurl);
                 } else {
                     $this->ctrlurl = ($url['scheme'].'://'.$url['host'].':'.$url['port'].'/'.$service->controlURL);
-		    var_dump ($this->ctrlurl);
                 }
           }
     }
@@ -162,7 +160,7 @@ class Remote {
 	    'SOAPAction: "'.$this->service_type.'#'.$method.'"',
              );
         var_dump ($header);
-
+        var_dump ($this->ctrlurl);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
@@ -179,7 +177,7 @@ class Remote {
         $result = $doc->getElementsByTagName('Result');
 	
         if(is_object($result->item(0))){
-            echo ( $result->item(0)->nodeValue);
+            var_dump ( $result->item(0)->nodeValue);
             return $result->item(0)->nodeValue;
         }
         return $response;
