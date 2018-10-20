@@ -163,24 +163,22 @@ class Remote {
         var_dump ($header);
         var_dump ($this->ctrlurl);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+               $ch = curl_init();
         curl_setopt( $ch, CURLOPT_HTTPHEADER, $header );
         curl_setopt( $ch, CURLOPT_HEADER, 0);
-        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, TRUE );
         curl_setopt( $ch, CURLOPT_URL, $url );
         curl_setopt( $ch, CURLOPT_POST, TRUE );
         curl_setopt( $ch, CURLOPT_POSTFIELDS, $body );
         $response = curl_exec( $ch );
         curl_close( $ch );
+        //var_dump($response);
         $doc = new \DOMDocument();
         $doc->loadXML($response);
         $result = $doc->getElementsByTagName('Result');
-	var_dump ($result);
         if(is_object($result->item(0))){
-            var_dump ( $result->item(0)->nodeValue);
             return $result->item(0)->nodeValue;
         }
-        return $response;
+        return false;
     }
 }
