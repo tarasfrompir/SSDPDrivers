@@ -199,6 +199,7 @@ class Remote
         $result = $doc->getElementsByTagName('Result');
 	
         if(is_object($result->item(0))){
+            echo ( $result->item(0)->nodeValue);
             return $result->item(0)->nodeValue;
         }
         return $response;
