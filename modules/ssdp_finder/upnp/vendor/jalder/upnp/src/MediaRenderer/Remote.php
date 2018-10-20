@@ -9,14 +9,12 @@ namespace jalder\Upnp\MediaRenderer;
 
 use jalder\Upnp;
 
-class Remote
-{
+class Remote {
 
   public $ctrlurl;
   private $upnp;
   public $service_type;
   public function __construct($server) {
-    $this->upnp = new Upnp\Core();
     $control_url = str_ireplace("Location:", "", $server);
     $url = parse_url($control_url);
     $this->ip = $url['host'];
@@ -35,9 +33,9 @@ class Remote
                 $chek_url = (substr($service->controlURL,0,1));
                 $this->service_type = ($service->serviceType);
                 if ($chek_url == '/') {
-                   $this->ctrlurl = ($this->upnp->baseUrl($control_url,True).$service->controlURL);
+                   $this->ctrlurl = ($url['scheme'].'://'.$url['host'].':'.$url['port'].$service->controlURL);
                 } else {
-                    $this->ctrlurl = ($this->upnp->baseUrl($control_url,True).'/'.$service->controlURL);
+                    $this->ctrlurl = ($url['scheme'].'://'.$url['host'].':'.$url['port'].'/'.$service->controlURL);
                 }
           }
     }
