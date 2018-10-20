@@ -149,7 +149,8 @@ class Remote {
         $body .='</u:'.$method.'>';
         $body .='</s:Body>';
         $body .='</s:Envelope>';
-        echo ('method '.$method);
+        var_dump ('body '.$body);
+	var_dump ('method '.$method);
         var_dump ('ST '.$this->service_type);
 	$header = array(
 	    'Host: '.$this->ip.':'.$this->port,
@@ -175,7 +176,7 @@ class Remote {
         $doc = new \DOMDocument();
         $doc->loadXML($response);
         $result = $doc->getElementsByTagName('Result');
-	
+	var_dump ($result);
         if(is_object($result->item(0))){
             var_dump ( $result->item(0)->nodeValue);
             return $result->item(0)->nodeValue;
