@@ -177,6 +177,6 @@ private function sendRequestToDevice($method, $arguments, $url, $type) {
         var_dump($result->item(0)->nodeValue);        
         return $result->item(0)->nodeValue;
     }
-    return false;
+    return $response;
 }
 }
