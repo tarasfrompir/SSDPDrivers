@@ -34,8 +34,10 @@ class Remote {
                 $this->service_type = ($service->serviceType);
                 if ($chek_url == '/') {
                    $this->ctrlurl = ($url['scheme'].'://'.$url['host'].':'.$url['port'].$service->controlURL);
+		   echo ($this->ctrlurl);
                 } else {
                     $this->ctrlurl = ($url['scheme'].'://'.$url['host'].':'.$url['port'].'/'.$service->controlURL);
+			echo ($this->ctrlurl);
                 }
           }
     }
