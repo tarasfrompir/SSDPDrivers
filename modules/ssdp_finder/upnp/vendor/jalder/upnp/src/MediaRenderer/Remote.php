@@ -176,6 +176,7 @@ class Remote {
         $doc->loadXML($response);
         $result = $doc->getElementsByTagName('Result');
         if(is_object($result->item(0))){
+            var_dump($result->item(0)->nodeValue);		
             return $result->item(0)->nodeValue;
         }
         return false;
