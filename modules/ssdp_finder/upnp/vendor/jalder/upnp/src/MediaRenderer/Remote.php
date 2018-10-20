@@ -183,8 +183,8 @@ class Remote
             'Content-Type: text/xml; charset="utf-8"',
 	    'SOAPAction: "'.$this->service_type.'#'.$method.'"',
              );
-        var_dump ('header '.$header);
-        var_dump ('body '.$body);
+        var_dump ($header);
+        var_dump ($body);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
