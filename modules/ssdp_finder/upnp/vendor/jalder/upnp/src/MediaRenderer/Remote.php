@@ -133,7 +133,7 @@ class Remote
                 return self::unpause();
                 }
 	    $tags = get_meta_tags($url);
-	    $args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>$tags['author']);  
+	    $args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>''); //$tags['author']  
 	    $response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
             $args = array('InstanceID'=>0,'Speed'=>1);
 	    $this->sendRequestToDevice('Play',$args,$this->ctrlurl,$this->service_type);
