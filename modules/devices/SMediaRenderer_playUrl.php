@@ -7,7 +7,9 @@ $adress = $this->getProperty("CONTROLADDRESS");
 $remote = new MediaRenderer\Remote($adress);
 $playUrl = $this->getProperty("playUrl");
 echo($playUrl);
+echo ($this->getState());
 $result = $remote->stop();
+
 echo('Result - '.$result);
 $result = $remote->play($playUrl);
 echo('Result - '.$result);
