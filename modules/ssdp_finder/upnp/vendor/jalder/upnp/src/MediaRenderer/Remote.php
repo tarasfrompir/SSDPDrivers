@@ -18,6 +18,10 @@ class Remote
   public function __construct($server) {
     $this->upnp = new Upnp\Core();
     $control_url = str_ireplace("Location:", "", $server);
+    $url = parse_url($control_url);
+    $this->ip = $url['host'];
+    $this->port = $url['port'];
+
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $control_url);
     curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -50,8 +54,7 @@ class Remote
 		return $this->sendRequestToDevice('SetNextAVTransportURI',$args,$this->ctrlurl,$this->service_type);
 	}
 	//this should be moved to the upnp and renderer model
-	public function getControlURL($description_url, $service = 'AVTransport')
-	{
+	public function getControlURL($description_url, $service = 'AVTransport') {
 		$description = $this->getDescription($description_url);
 
 		switch($service)
@@ -64,10 +67,8 @@ class Remote
 				break;
 		}
 
-		foreach($description['device']['serviceList']['service'] as $service)
-		{
-			if($service['serviceType'] == $serviceType)
-			{
+		foreach($description['device']['serviceList']['service'] as $service) {
+			if($service['serviceType'] == $serviceType) {
 				$url = parse_url($description_url);
 				return $url['scheme'].'://'.$url['host'].':'.$url['port'].$service['controlURL'];
 			}
@@ -162,7 +163,7 @@ class Remote
 		return $response;
 	}
 	
-        private function sendRequestToDevice($method, $arguments, $url, $type, $hostIp = '127.0.0.1', $hostPort = '80')
+        private function sendRequestToDevice($method, $arguments, $url, $type)
         {
         $body  ='<?xml version="1.0" encoding="utf-8"?>' . "\r\n";
         $body .='<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
@@ -175,14 +176,15 @@ class Remote
         $body .='</s:Body>';
         $body .='</s:Envelope>';
         $header = array(
-	    'Host: '.$hostIp.':'.$hostPort,
+	    'Host: '.$this->ip.':'.$this->port,
             'User-Agent: '.$this->user_agent, //fudge the user agent to get desired video format
             'Content-Length: ' . strlen($body),
 	    'Connection: close',
             'Content-Type: text/xml; charset="utf-8"',
 	    'SOAPAction: "'.$this->service_type.'#'.$method.'"',
-        );
-
+             );
+        echo ('header '.$header);
+        echo ('body '.$body);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
