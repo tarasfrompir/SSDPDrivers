@@ -163,7 +163,6 @@ class Remote {
         var_dump ($header);
         var_dump ($this->ctrlurl);
         $ch = curl_init();
-               $ch = curl_init();
         curl_setopt( $ch, CURLOPT_HTTPHEADER, $header );
         curl_setopt( $ch, CURLOPT_HEADER, 0);
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, TRUE );
