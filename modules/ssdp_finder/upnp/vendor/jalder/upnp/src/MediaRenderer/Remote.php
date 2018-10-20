@@ -49,21 +49,10 @@ class Remote {
             'NextURIMetaData'=>'testmetadata'
         );
         return $this->sendRequestToDevice('SetNextAVTransportURI',$args,$this->ctrlurl,$this->service_type);
-    }
-    //this should be moved to the upnp and renderer model
-    public function getControlURL($description_url, $service = 'AVTransport') {
-        $description = $this->getDescription($description_url);
-                foreach($description['device']['serviceList']['service'] as $service) {
-              if($service['serviceType'] == $this->service_type) {
-                $url = parse_url($description_url);
-                return $url['scheme'].'://'.$url['host'].':'.$url['port'].$service['controlURL'];
-            }
         }
-    }
-
     public function getState() {
         return $this->instanceOnly('GetTransportInfo');
-    }
+        }
 
     public function getPosition() {
         return $this->instanceOnly('getPositionInfo');
