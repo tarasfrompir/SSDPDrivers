@@ -160,8 +160,6 @@ class Remote {
             'Content-Type: text/xml; charset="utf-8"',
 	    'SOAPAction: "'.$this->service_type.'#'.$method.'"',
              );
-        var_dump ($header);
-        var_dump ($this->ctrlurl);
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_HTTPHEADER, $header );
         curl_setopt( $ch, CURLOPT_HEADER, 0);
@@ -171,7 +169,7 @@ class Remote {
         curl_setopt( $ch, CURLOPT_POSTFIELDS, $body );
         $response = curl_exec( $ch );
         curl_close( $ch );
-        //var_dump($response);
+        var_dump($response);
         $doc = new \DOMDocument();
         $doc->loadXML($response);
         $result = $doc->getElementsByTagName('Result');
