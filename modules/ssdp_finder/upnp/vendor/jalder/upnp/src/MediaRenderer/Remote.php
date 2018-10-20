@@ -133,7 +133,7 @@ class Remote {
         $tags = get_meta_tags($url);
         $args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>''); //$tags['author']  
         $response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
-            $args = array('InstanceID'=>0,'Speed'=>1);
+        $args = array('InstanceID'=>0,'Speed'=>1);
         $this->sendRequestToDevice('Play',$args,$this->ctrlurl,$this->service_type);
         return $response;
     }
@@ -149,7 +149,7 @@ private function sendRequestToDevice($method, $arguments, $url, $type) {
     $body .='</u:'.$method.'>';
     $body .='</s:Body>';
     $body .='</s:Envelope>';
-    var_dump ('body '.$body);
+    print_r ('body '.$body);
     var_dump ('method '.$method);
     var_dump ('ST '.$this->service_type);
     $header = array(
