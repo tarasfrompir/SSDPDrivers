@@ -151,16 +151,16 @@ class Remote
 		return $response['s:Body']['u:SeekResponse'];
 	}
 	
-		public function play($url = "") {
-        if($url === ""){
-            return self::unpause();
-        }
-		$args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>'');  
-		$response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
-
-		$args = array('InstanceID'=>0,'Speed'=>1);
-		$this->sendRequestToDevice('Play',$args,$this->ctrlurl,$this->service_type);
-		return $response;
+	public function play($url = "") {
+            if($url === "") {
+                return self::unpause();
+                }
+	    $tags = get_meta_tags($url);
+	    $args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>$tags);  
+	    $response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
+            $args = array('InstanceID'=>0,'Speed'=>1);
+	    $this->sendRequestToDevice('Play',$args,$this->ctrlurl,$this->service_type);
+	    return $response;
 	}
 	
         private function sendRequestToDevice($method, $arguments, $url, $type)
