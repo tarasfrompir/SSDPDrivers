@@ -67,17 +67,14 @@ class Remote {
 
     public function getMedia() {
         $response = $this->instanceOnly('GetMediaInfo');
-        // сохраняет данные в файл
-        //$file = 'people.txt';
-                //file_put_contents($file, $response);
         // создает документ хмл
         $doc = new \DOMDocument();
         //  загружет его
-                $doc->loadXML($response);
+        $doc->loadXML($response);
         //  выбирает поле соответсвтуещее
-               $result = $doc->getElementsByTagName('CurrentURI');
-               foreach ($result as $item) {
-                        $track = $item->nodeValue;
+        $result = $doc->getElementsByTagName('CurrentURI');
+        foreach ($result as $item) {
+            $track = $item->nodeValue;
             }
         return $track;
     }
@@ -160,7 +157,7 @@ private function sendRequestToDevice($method, $arguments, $url, $type) {
     curl_setopt( $ch, CURLOPT_POSTFIELDS, $body );
     $response = curl_exec( $ch );
     curl_close( $ch );
-    var_dump($response);
+    echo($response);
     $doc = new \DOMDocument();
     $doc->loadXML($response);
     $result = $doc->getElementsByTagName('Result');
