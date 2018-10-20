@@ -175,7 +175,9 @@ class Remote
         $body .='</u:'.$method.'>';
         $body .='</s:Body>';
         $body .='</s:Envelope>';
-        $header = array(
+        var_dump ($body);
+        var_dump ('ST '.$this->service_type);
+	$header = array(
 	    'Host: '.$this->ip.':'.$this->port,
             'User-Agent: '.$this->user_agent, //fudge the user agent to get desired video format
             'Content-Length: ' . strlen($body),
@@ -184,7 +186,7 @@ class Remote
 	    'SOAPAction: "'.$this->service_type.'#'.$method.'"',
              );
         var_dump ($header);
-        var_dump ($body);
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
