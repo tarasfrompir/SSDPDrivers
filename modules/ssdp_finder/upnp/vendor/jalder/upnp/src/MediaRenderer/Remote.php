@@ -27,7 +27,7 @@ class Remote {
     $content = curl_exec($ch);
     libxml_use_internal_errors(true); 
     $xml = simplexml_load_string($content);
-	   
+       
     foreach($xml->device->serviceList->service as $service){
           if($service->serviceId == 'urn:upnp-org:serviceId:AVTransport'){
                 $chek_url = (substr($service->controlURL,0,1));
@@ -43,75 +43,75 @@ class Remote {
 
 
     public function setNext($url)
-	{
-		$args = array(
-			'InstanceID'=>0,
-			'NextURI'=>'<![CDATA['.$url.']]>',
-			'NextURIMetaData'=>'testmetadata'
-		);
-		return $this->sendRequestToDevice('SetNextAVTransportURI',$args,$this->ctrlurl,$this->service_type);
-	}
-	//this should be moved to the upnp and renderer model
-	public function getControlURL($description_url, $service = 'AVTransport') {
-		$description = $this->getDescription($description_url);
+    {
+        $args = array(
+            'InstanceID'=>0,
+            'NextURI'=>'<![CDATA['.$url.']]>',
+            'NextURIMetaData'=>'testmetadata'
+        );
+        return $this->sendRequestToDevice('SetNextAVTransportURI',$args,$this->ctrlurl,$this->service_type);
+    }
+    //this should be moved to the upnp and renderer model
+    public function getControlURL($description_url, $service = 'AVTransport') {
+        $description = $this->getDescription($description_url);
                 foreach($description['device']['serviceList']['service'] as $service) {
-  			if($service['serviceType'] == $this->service_type) {
-				$url = parse_url($description_url);
-				return $url['scheme'].'://'.$url['host'].':'.$url['port'].$service['controlURL'];
-			}
-		}
-	}
+              if($service['serviceType'] == $this->service_type) {
+                $url = parse_url($description_url);
+                return $url['scheme'].'://'.$url['host'].':'.$url['port'].$service['controlURL'];
+            }
+        }
+    }
 
-	public function getState() {
-		return $this->instanceOnly('GetTransportInfo');
-	}
+    public function getState() {
+        return $this->instanceOnly('GetTransportInfo');
+    }
 
-	public function getPosition() {
-		return $this->instanceOnly('getPositionInfo');
-	}
+    public function getPosition() {
+        return $this->instanceOnly('getPositionInfo');
+    }
 
-	private function instanceOnly($command,$type = 'AVTransport', $id = 0) {
-		$args = array('InstanceID'=>$id);
-		$response = $this->sendRequestToDevice($command,$args,$this->ctrlurl,$this->service_type);
+    private function instanceOnly($command,$type = 'AVTransport', $id = 0) {
+        $args = array('InstanceID'=>$id);
+        $response = $this->sendRequestToDevice($command,$args,$this->ctrlurl,$this->service_type);
         return $response;
-	}
+    }
 
-	public function getMedia() {
-		$response = $this->instanceOnly('GetMediaInfo');
-		// сохраняет данные в файл
-		//$file = 'people.txt';
+    public function getMedia() {
+        $response = $this->instanceOnly('GetMediaInfo');
+        // сохраняет данные в файл
+        //$file = 'people.txt';
                 //file_put_contents($file, $response);
-		// создает документ хмл
-		$doc = new \DOMDocument();
-		//  загружет его
+        // создает документ хмл
+        $doc = new \DOMDocument();
+        //  загружет его
                 $doc->loadXML($response);
-		//  выбирает поле соответсвтуещее
+        //  выбирает поле соответсвтуещее
                $result = $doc->getElementsByTagName('CurrentURI');
                foreach ($result as $item) {
                         $track = $item->nodeValue;
-			}
-		return $track;
-	}
-	public function stop() {
-		return $this->instanceOnly('Stop');
-	}
-	
-	public function unpause() {
-		$args = array('InstanceID'=>0,'Speed'=>1);
-		return $this->sendRequestToDevice('Play',$args,$this->ctrlurl,$this->service_type);     
-	}
+            }
+        return $track;
+    }
+    public function stop() {
+        return $this->instanceOnly('Stop');
+    }
+    
+    public function unpause() {
+        $args = array('InstanceID'=>0,'Speed'=>1);
+        return $this->sendRequestToDevice('Play',$args,$this->ctrlurl,$this->service_type);     
+    }
 
-	public function pause() {
-		return $this->instanceOnly('Pause');
-	}
+    public function pause() {
+        return $this->instanceOnly('Pause');
+    }
 
-	public function next() {
-		return $this->instanceOnly('Next');
-	}
+    public function next() {
+        return $this->instanceOnly('Next');
+    }
 
-	public function previous() {
-		return $this->instanceOnly('Previous');
-	}
+    public function previous() {
+        return $this->instanceOnly('Previous');
+    }
 
         public function fforward() {
                return $this->next();
@@ -121,62 +121,62 @@ class Remote {
                return $this->previous();
         }
 
-	public function seek($unit = 'TRACK_NR', $target=0) {
-		$response = $this->sendRequestToDevice('Seek',$args,$this->ctrlurl.'serviceControl/AVTransport','AVTransport');
-		return $response['s:Body']['u:SeekResponse'];
-	}
-	
-	public function play($url = "") {
+    public function seek($unit = 'TRACK_NR', $target=0) {
+        $response = $this->sendRequestToDevice('Seek',$args,$this->ctrlurl.'serviceControl/AVTransport','AVTransport');
+        return $response['s:Body']['u:SeekResponse'];
+    }
+    
+    public function play($url = "") {
             if($url === "") {
                 return self::unpause();
                 }
-	    $tags = get_meta_tags($url);
-	    $args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>''); //$tags['author']  
-	    $response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
+        $tags = get_meta_tags($url);
+        $args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>''); //$tags['author']  
+        $response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
             $args = array('InstanceID'=>0,'Speed'=>1);
-	    $this->sendRequestToDevice('Play',$args,$this->ctrlurl,$this->service_type);
-	    return $response;
-	}
-	
-        private function sendRequestToDevice($method, $arguments, $url, $type) {
-        $body  ='<?xml version="1.0" encoding="utf-8"?>' . "\r\n";
-        $body .='<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
-        $body .='<s:Body>';
-        $body .='<u:'.$method.' xmlns:u="'.$this->service_type.'">';
-        foreach( $arguments as $arg=>$value ) {
-            $body .='<'.$arg.'>'.$value.'</'.$arg.'>';
-        }
-        $body .='</u:'.$method.'>';
-        $body .='</s:Body>';
-        $body .='</s:Envelope>';
-        var_dump ('body '.$body);
-	var_dump ('method '.$method);
-        var_dump ('ST '.$this->service_type);
-	$header = array(
-	    'Host: '.$this->ip.':'.$this->port,
-            'User-Agent: '.$this->user_agent, //fudge the user agent to get desired video format
-            'Content-Length: ' . strlen($body),
-	    'Connection: close',
-            'Content-Type: text/xml; charset="utf-8"',
-	    'SOAPAction: "'.$this->service_type.'#'.$method.'"',
-             );
-        $ch = curl_init();
-        curl_setopt( $ch, CURLOPT_HTTPHEADER, $header );
-        curl_setopt( $ch, CURLOPT_HEADER, 0);
-        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, TRUE );
-        curl_setopt( $ch, CURLOPT_URL, $url );
-        curl_setopt( $ch, CURLOPT_POST, TRUE );
-        curl_setopt( $ch, CURLOPT_POSTFIELDS, $body );
-        $response = curl_exec( $ch );
-        curl_close( $ch );
-        var_dump($response);
-        $doc = new \DOMDocument();
-        $doc->loadXML($response);
-        $result = $doc->getElementsByTagName('Result');
-        if(is_object($result->item(0))){
-            var_dump($result->item(0)->nodeValue);		
-            return $result->item(0)->nodeValue;
-        }
-        return false;
+        $this->sendRequestToDevice('Play',$args,$this->ctrlurl,$this->service_type);
+        return $response;
     }
+    
+private function sendRequestToDevice($method, $arguments, $url, $type) {
+    $body  ='<?xml version="1.0" encoding="utf-8"?>' . "\r\n";
+    $body .='<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
+    $body .='<s:Body>';
+    $body .='<u:'.$method.' xmlns:u="'.$this->service_type.'">';
+    foreach( $arguments as $arg=>$value ) {
+        $body .='<'.$arg.'>'.$value.'</'.$arg.'>';
+    }
+    $body .='</u:'.$method.'>';
+    $body .='</s:Body>';
+    $body .='</s:Envelope>';
+    var_dump ('body '.$body);
+    var_dump ('method '.$method);
+    var_dump ('ST '.$this->service_type);
+    $header = array(
+        'Host: '.$this->ip.':'.$this->port,
+        'User-Agent: '.$this->user_agent, //fudge the user agent to get desired video format
+        'Content-Length: ' . strlen($body),
+        'Connection: close',
+        'Content-Type: text/xml; charset="utf-8"',
+        'SOAPAction: "'.$this->service_type.'#'.$method.'"',
+        );
+    $ch = curl_init();
+    curl_setopt( $ch, CURLOPT_HTTPHEADER, $header );
+    curl_setopt( $ch, CURLOPT_HEADER, 0);
+    curl_setopt( $ch, CURLOPT_RETURNTRANSFER, TRUE );
+    curl_setopt( $ch, CURLOPT_URL, $url );
+    curl_setopt( $ch, CURLOPT_POST, TRUE );
+    curl_setopt( $ch, CURLOPT_POSTFIELDS, $body );
+    $response = curl_exec( $ch );
+    curl_close( $ch );
+    var_dump($response);
+    $doc = new \DOMDocument();
+    $doc->loadXML($response);
+    $result = $doc->getElementsByTagName('Result');
+    if(is_object($result->item(0))){
+        var_dump($result->item(0)->nodeValue);        
+        return $result->item(0)->nodeValue;
+    }
+    return false;
+}
 }
