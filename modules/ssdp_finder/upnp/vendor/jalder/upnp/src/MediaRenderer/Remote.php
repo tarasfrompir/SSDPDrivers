@@ -121,7 +121,7 @@ public function setNext($url) {
                  <item id="'.$rand.'spotify%3atrack%3a'.$spotify_id.'" restricted="true">
                     <dc:title></dc:title>
                     <upnp:class>object.item.audioItem</upnp:class>
-                    <desc id="cdudn" nameSpace="urn:schemas-rinconnetworks-com:metadata-1-0/">SA_RINCON2311_X_#Svc2311-0-Token</desc>
+                    <desc id="cdudn" nameSpace="urn:schemas-rinconnetworks-com:metadata-1-0/">Majordomo play url</desc>
                   </item>
                 </DIDL-Lite>';
       
