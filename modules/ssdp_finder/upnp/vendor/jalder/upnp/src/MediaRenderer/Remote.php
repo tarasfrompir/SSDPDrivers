@@ -131,6 +131,7 @@ public function setNext($url) {
       
         $args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>$meta);  
         $response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
+        var_dump ($response);
         $args = array('InstanceID'=>0,'Speed'=>1);
         $this->sendRequestToDevice('Play',$args,$this->ctrlurl,$this->service_type);
         return $response;
