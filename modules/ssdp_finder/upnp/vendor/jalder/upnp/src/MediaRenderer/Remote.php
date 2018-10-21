@@ -116,15 +116,18 @@ public function setNext($url) {
             if($url === "") {
                 return self::unpause();
                 }
-        $rand = mt_rand(10000000, 99999999);
-        $meta = '<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" 
-                    xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">
-                 <item id="'.$rand.'" restricted="true">
-                    <dc:title>Majordomo play url command</dc:title>
-                    <upnp:class>object.item.audioItem</upnp:class>
-                    <desc id="cdudn" nameSpace="urn:schemas-rinconnetworks-com:metadata-1-0/">Majordomo play url</desc>
-                  </item>
-                </DIDL-Lite>';
+      $rand = mt_rand(10000000, 99999999);
+      $headers = get_headers($url, 1);
+      $type = $headers["Content-Type"];
+      $meta = '<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" 
+               xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">
+                <item id="'.$rand.'" restricted="true">
+                  <dc:title>Majordomo play url command</dc:title>
+                  <dc:creator>Majordomo terminal</dc:creator>
+                  <upnp:class>object.item.audioItem</upnp:class>
+                  <res protocolInfo="http-get:*:'.$type.':DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000"sec:URIType="public">'.$url.'</res>
+                 </item>
+              </DIDL-Lite>';
       
         $args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>$meta);  
         $response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
