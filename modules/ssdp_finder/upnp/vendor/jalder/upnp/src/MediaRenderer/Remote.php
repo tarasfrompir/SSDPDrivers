@@ -83,6 +83,7 @@ class Remote {
         //  выбирает поле соответсвтуещее
         $result = $doc->getElementsByTagName($command.'Response');
         if(is_object($result->item(0))){
+		DedMes($command.' ok');
             return $command.' ok';
         }
         
