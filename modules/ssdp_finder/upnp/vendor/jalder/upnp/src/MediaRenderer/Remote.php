@@ -183,6 +183,10 @@ class Remote {
 //   </item>
 //</DIDL-Lite>
     
-    // echo get_headers($playUrl, 1)["Content-Type"]; = video/mp4
+//echo get_headers($playUrl, 1)["Content-Type"];
+
+//echo get_headers($playUrl, 1)["Content-Length"];
+
+//echo substr(get_headers($playUrl, 1)["Content-Disposition"],-3);
     
 }
