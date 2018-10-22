@@ -11,23 +11,19 @@ use jalder\Upnp;
 
 class Remote {
 
-  public $ctrlurl;
-  private $upnp;
-  public $service_type;
   public function __construct($server) {
-    $control_url = str_ireplace("Location:", "", $server);
-    $url = parse_url($control_url);
-    $this->ip = $url['host'];
-    $this->port = $url['port'];
-
+    $crl = str_ireplace("Location:", "", $server);
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $control_url);
+    curl_setopt($ch, CURLOPT_URL, $crl);
     curl_setopt($ch, CURLOPT_HEADER, 0);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     $content = curl_exec($ch);
     libxml_use_internal_errors(true); 
     $xml = simplexml_load_string($content);
-       
+    
+	$url = parse_url($crl);
+    $this->ip = $url['host'];
+    $this->port = $url['port'];
     foreach($xml->device->serviceList->service as $service){
           if($service->serviceId == 'urn:upnp-org:serviceId:AVTransport'){
                 $chek_url = (substr($service->controlURL,0,1));
@@ -116,20 +112,24 @@ public function setNext($url) {
             if($url === "") {
                 return self::unpause();
                 }
-      $rand = mt_rand(10000000, 99999999);
-      $headers = get_headers($url, 1);
-      $type = $headers["Content-Type"];
-      $meta = '';
+        $rand = mt_rand(10000000, 99999999);
+        $meta = '<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" 
+                    xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">
+                 <item id="'.$rand.'" restricted="true">
+                    <dc:title>Majordomo play url command</dc:title>
+                    <upnp:class>object.item.audioItem</upnp:class>
+                    <desc id="cdudn" nameSpace="urn:schemas-rinconnetworks-com:metadata-1-0/">Majordomo play url</desc>
+                  </item>
+                </DIDL-Lite>';
       
         $args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>$meta);  
         $response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
-        var_dump ($response);
         $args = array('InstanceID'=>0,'Speed'=>1);
         $this->sendRequestToDevice('Play',$args,$this->ctrlurl,$this->service_type);
         return $response;
     }
     
-private function sendRequestToDevice($method, $arguments, $url, $type) {
+private function sendRequestToDevice($method, $arguments) {
     $body  ='<?xml version="1.0" encoding="utf-8"?>' . "\r\n";
     $body .='<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
     $body .='<s:Body>';
@@ -148,23 +148,22 @@ private function sendRequestToDevice($method, $arguments, $url, $type) {
         'Content-Type: text/xml; charset="utf-8"',
         'SOAPAction: "'.$this->service_type.'#'.$method.'"',
         );
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt( $ch, CURLOPT_HTTPHEADER, $header );
-        curl_setopt( $ch, CURLOPT_HEADER, 0);
-        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-        curl_setopt( $ch, CURLOPT_URL, $this->ctrlurl );
-        curl_setopt( $ch, CURLOPT_POST, TRUE );
-        curl_setopt( $ch, CURLOPT_POSTFIELDS, $body );
-        $response = curl_exec( $ch );
-        curl_close( $ch );
-        $doc = new \DOMDocument();
-        $doc->loadXML($response);
-        $result = $doc->getElementsByTagName('Result');
-        if(is_object($result->item(0))){
-            return $result->item(0)->nodeValue;
-        }
-        return $response;
+    $ch = curl_init();
+    curl_setopt( $ch, CURLOPT_HTTPHEADER, $header );
+    curl_setopt( $ch, CURLOPT_HEADER, 0);
+    curl_setopt( $ch, CURLOPT_RETURNTRANSFER, TRUE );
+    curl_setopt( $ch, CURLOPT_URL, $this->ctrlurl );
+    curl_setopt( $ch, CURLOPT_POST, TRUE );
+    curl_setopt( $ch, CURLOPT_POSTFIELDS, $body );
+    $response = curl_exec( $ch );
+	DebMes($response);
+    curl_close( $ch );
+    $doc = new \DOMDocument();
+    $doc->loadXML($response);
+    $result = $doc->getElementsByTagName('Result');
+    if(is_object($result->item(0))){
+        return $result->item(0)->nodeValue;
     }
+    return $response;
+}
 }
