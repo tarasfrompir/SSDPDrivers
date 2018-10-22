@@ -110,6 +110,7 @@ class Remote {
         var_dump($response);
         $args = array( 'InstanceID' => 0, 'Speed' => 1);
         $response = $this->sendRequestToDevice('Play', $args);
+	var_dump($response);
 	return $response;
     }
 
