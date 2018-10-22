@@ -104,7 +104,7 @@ public function setNext($url) {
         }
 
     public function seek($unit = 'TRACK_NR', $target=0) {
-        $response = $this->sendRequestToDevice('Seek',$args,$this->ctrlurl.'serviceControl/AVTransport','AVTransport');
+        $response = $this->sendRequestToDevice('Seek',$args);
         return $response['s:Body']['u:SeekResponse'];
     }
     
@@ -112,10 +112,10 @@ public function setNext($url) {
             if($url === "") {
                 return self::unpause();
                 }
-        $args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>'');  
-        $response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
+        $args = array('InstanceID'=>'0', 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>'');  
+        $response = $this->sendRequestToDevice('SetAVTransportURI',$args);
         $args = array('InstanceID'=>0,'Speed'=>1);
-        $this->sendRequestToDevice('Play',$args,$this->ctrlurl,$this->service_type);
+        $this->sendRequestToDevice('Play',$args);
         return $response;
     }
     
