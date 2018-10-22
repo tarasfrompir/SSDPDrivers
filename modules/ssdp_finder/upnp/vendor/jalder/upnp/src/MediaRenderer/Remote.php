@@ -112,10 +112,7 @@ public function setNext($url) {
             if($url === "") {
                 return self::unpause();
                 }
-        $rand = mt_rand(10000000, 99999999);
-        $meta = '';
-      
-        $args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>$meta);  
+        $args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>'');  
         $response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
         $args = array('InstanceID'=>0,'Speed'=>1);
         $this->sendRequestToDevice('Play',$args,$this->ctrlurl,$this->service_type);
