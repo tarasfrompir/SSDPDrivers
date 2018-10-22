@@ -182,4 +182,7 @@ class Remote {
 //      <res protocolInfo="http-get:*:video/mp4:DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000" ssize="7937239" duration="0:03:57.000" bitrate="4000">url to file</res>
 //   </item>
 //</DIDL-Lite>
+    
+    // echo get_headers($playUrl, 1)["Content-Type"]; = video/mp4
+    
 }
