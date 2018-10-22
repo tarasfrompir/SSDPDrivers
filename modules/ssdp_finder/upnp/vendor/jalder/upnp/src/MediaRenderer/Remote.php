@@ -93,9 +93,8 @@ class Remote {
         if ($url === "") {
             return self::unpause();
         }
-        $meta = '&lt;DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" 
-	xmlns:dlna="urn:schemas-dlna-org:metadata-1-0/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/"&gt;&lt;item id="1"&gt;&lt;dc:title&gt;Come Together (The Beatles Cover)&lt;/dc:title&gt;&lt;dc:creator&gt;Unknown&lt;/dc:creator&gt;&lt;upnp:artist&gt;Prince&lt;/upnp:artist&gt;&lt;upnp:album&gt;Coachella&lt;/upnp:album&gt;&lt;upnp:genre&gt;Unknown&lt;/upnp:genre&gt;&lt;upnp:albumArtURI&gt;(null)&lt;/upnp:albumArtURI&gt;&lt;upnp:originalTrackNumber&gt;1t;/upnp:originalTrackNumber&gt;&lt;upnp:class&gt;object.item.audioItem.musicTrack&lt;/upnp:class&gt;&lt;/item&gt;&lt;/DIDL-Lite&gt;';
-        $args = array('InstanceID' => '0', 'CurrentURI' => '<![CDATA[' . $url . ']]>', 'CurrentURIMetaData' => $meta);
+         = '<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/"><item id="-1" parentID="-1" restricted="true"><dc:title>'.htmlspecialchars('Majordomo play').'</dc:title><upnp:class>object.item.audioItem.audioBroadcast</upnp:class><desc id="cdudn" nameSpace="urn:schemas-rinconnetworks-com:metadata-1-0/">SA_RINCON65031_</desc></item></DIDL-Lite>';';
+        $args = array('InstanceID' => '0', 'CurrentURI' => '<![CDATA[' . $url . ']]>', 'CurrentURIMetaData' => $metaData);
         $response = $this->sendRequestToDevice('SetAVTransportURI', $args);
         //var_dump($response);
         //$args = array( 'InstanceID' => 0, 'Speed' => 1);
