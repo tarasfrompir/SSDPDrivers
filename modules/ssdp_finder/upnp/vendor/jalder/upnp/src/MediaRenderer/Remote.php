@@ -93,7 +93,7 @@ class Remote {
         if ($url === "") {
             return self::unpause();
         }
-	$args = array('InstanceID' => '0', 'CurrentURI' => <![CDATA[' . $url . ']]>, 'CurrentURIMetaData' => '');
+	$args = array('InstanceID' => '0', 'CurrentURI' => '<![CDATA[' . $url . ']]>', 'CurrentURIMetaData' => '');
         $response = $this->sendRequestToDevice('SetAVTransportURI', $args);
         //var_dump($response);
         //$args = array( 'InstanceID' => 0, 'Speed' => 1);
