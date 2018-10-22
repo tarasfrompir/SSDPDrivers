@@ -172,4 +172,14 @@ class Remote {
     public function rewind() {
         return $this->previous();
     }
+    
+//<DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dlna=”urn:schemas-dlna-org:metadata-1-0" xmlns:sec="http://www.sec.co.kr/" xmlns:pv="http://www.pw.com/pvns">
+//   <item id="HZ" parentID="HZZ" restricted="0">
+//      <upnp:class>object.item.videoItem</upnp:class>
+//      <dc:title>Video</dc:title>
+//      <dc:creator>vGet</dc:creator>
+//      <upnp:artist>Artist</upnp:artist>
+//      <res protocolInfo="http-get:*:video/mp4:DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000" ssize="7937239" duration="0:03:57.000" bitrate="4000">url to file</res>
+//   </item>
+//</DIDL-Lite>
 }
