@@ -156,21 +156,21 @@ private function sendRequestToDevice($method, $arguments, $url, $type) {
         'Content-Type: text/xml; charset="utf-8"',
         'SOAPAction: "'.$this->service_type.'#'.$method.'"',
         );
-    $ch = curl_init();
-    curl_setopt( $ch, CURLOPT_HTTPHEADER, $header );
-    curl_setopt( $ch, CURLOPT_HEADER, 0);
-    curl_setopt( $ch, CURLOPT_RETURNTRANSFER, TRUE );
-    curl_setopt( $ch, CURLOPT_URL, $url );
-    curl_setopt( $ch, CURLOPT_POST, TRUE );
-    curl_setopt( $ch, CURLOPT_POSTFIELDS, $body );
-    $response = curl_exec( $ch );
-    curl_close( $ch );
-    $doc = new \DOMDocument();
-    $doc->loadXML($response);
-    $result = $doc->getElementsByTagName('Result');
-    if(is_object($result->item(0))){
-        return $result->item(0)->nodeValue;
+            $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_HTTPHEADER, $header );
+        curl_setopt( $ch, CURLOPT_HEADER, 0);
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
+        curl_setopt( $ch, CURLOPT_URL, $url );
+        curl_setopt( $ch, CURLOPT_POST, TRUE );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $body );
+        $response = curl_exec( $ch );
+        curl_close( $ch );
+        $doc = new \DOMDocument();
+        $doc->loadXML($response);
+        $result = $doc->getElementsByTagName('Result');
+        if(is_object($result->item(0))){
+            return $result->item(0)->nodeValue;
+        }
+        return $response;
     }
-    return $response;
-}
 }
