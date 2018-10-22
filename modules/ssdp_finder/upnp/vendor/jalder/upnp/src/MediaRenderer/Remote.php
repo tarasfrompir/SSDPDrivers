@@ -107,9 +107,9 @@ class Remote {
 &lt;/DIDL-Lite&gt;';
 	$args = array('InstanceID' => 0, 'CurrentURI' => '<![CDATA[' . $url . ']]>', 'CurrentURIMetaData' => $MetaData);
         $response = $this->sendRequestToDevice('SetAVTransportURI', $args);
-        //var_dump($response);
-        //$args = array( 'InstanceID' => 0, 'Speed' => 1);
-        //$response = $this->sendRequestToDevice('Play', $args);
+        var_dump($response);
+        $args = array( 'InstanceID' => 0, 'Speed' => 1);
+        $response = $this->sendRequestToDevice('Play', $args);
 	return $response;
     }
 
