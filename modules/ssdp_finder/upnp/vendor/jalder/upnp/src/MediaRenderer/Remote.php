@@ -83,8 +83,7 @@ class Remote {
         //  выбирает поле соответсвтуещее
         $result = $doc->getElementsByTagName($command.'Response');
         if(is_object($result->item(0))){
-	    echo ($command.' ok');
-            return $command.' ok';
+          return $command.' ok';
         }
         
         return $result;
@@ -104,11 +103,12 @@ class Remote {
                    <res protocolInfo="http-get:*:'.get_headers($url, 1)["Content-Type"].':DLNA.ORG_PN='.substr(get_headers($url, 1)["Content-Disposition"],-3).';DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000" size="'.get_headers($url, 1)["Content-Length"].'" duration="0:03:57.000" bitrate="4000">'.$playUrl.'</res>
                   </item>
                  </DIDL-Lite>';
-        $args = array('InstanceID' => '0', 'CurrentURI' => '<![CDATA[' . $url . ']]>', 'CurrentURIMetaData' => '' );
+        $args = array('InstanceID' => '0', 'CurrentURI' => '<![CDATA[' . $url . ']]>', 'CurrentURIMetaData' => $meta);
         $response = $this->sendRequestToDevice('SetAVTransportURI', $args);
-
+        var_dump($response);
         $args = array( 'InstanceID' => 0, 'Speed' => 1);
         $response = $this->sendRequestToDevice('Play', $args);
+	var_dump($response);
         return $response;
     }
 
