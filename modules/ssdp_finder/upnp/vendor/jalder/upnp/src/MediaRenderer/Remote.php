@@ -48,7 +48,7 @@ class Remote {
     }
 
     private function sendRequestToDevice($command, $arguments) {
-        $body = '<?xml version="1.0" encoding="utf-8" standalone="yes"?>';
+        $body = '<?xml version="1.0" encoding="utf-8" standalone="yes"?>'."\r\n";
         $body.= '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
         $body.= '<s:Body>';
         $body.= '<u:' . $command . ' xmlns:u="' . $this->service_type . '">';
