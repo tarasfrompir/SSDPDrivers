@@ -99,7 +99,7 @@ class Remote {
                    <dc:title>Majordomo message</dc:title>
                    <dc:creator>Majordomo</dc:creator>
                    <upnp:artist>Tarasfrompir</upnp:artist>
-                   <res protocolInfo="http-get:*:'.get_headers($url, 1)["Content-Type"].':DLNA.ORG_PN='.(substr(get_headers($url, 1)["Content-Disposition"],-3)).';DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000" size="'.get_headers($url, 1)["Content-Length"].'" duration="0:03:45.000">'.$playUrl.'</res>
+                   <res protocolInfo="http-get:*:audio/mpeg;DLNA.ORG_PN=MP3;DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000" bitrate="321000" size="'.get_headers($url, 1)["Content-Length"].'" duration="0:03:45.000">'.$playUrl.'</res>
                   </item>
                  </DIDL-Lite>';
         $args = array('InstanceID' => '0', 'CurrentURI' => '<![CDATA[' . $url . ']]>', 'CurrentURIMetaData' => $meta);
