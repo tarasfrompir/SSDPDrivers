@@ -93,9 +93,8 @@ class Remote {
         if ($url === "") {
             return self::unpause();
         }
-	$id = mt_rand(1, 999999); 
         $meta = '<DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dlna=”urn:schemas-dlna-org:metadata-1-0" xmlns:sec="http://www.sec.co.kr/" xmlns:pv="http://www.pw.com/pvns">
-                  <item id="'.$id.'" parentID="0" restricted="0">
+                  <item id="f-0" parentID="0" restricted="0">
                    <upnp:class>object.item.audioItem.musicTrack</upnp:class>
                    <dc:title>Majordomo message</dc:title>
                    <dc:creator>Majordomo</dc:creator>
