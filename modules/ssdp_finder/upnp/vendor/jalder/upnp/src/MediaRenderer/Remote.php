@@ -93,16 +93,14 @@ class Remote {
         if ($url === "") {
             return self::unpause();
         }
-        $meta = '<DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dlna=”urn:schemas-dlna-org:metadata-1-0" xmlns:sec="http://www.sec.co.kr/" xmlns:pv="http://www.pw.com/pvns">
-                  <item id="f-0" parentID="0" restricted="1">
-                   <upnp:class>object.item.audioItem.musicTrack</upnp:class>
-                   <dc:title>Majordomo message</dc:title>
-                   <dc:creator>Majordomo</dc:creator>
-                   <upnp:artist>Tarasfrompir</upnp:artist>
-		   <upnp:albumArtUri>Tarasfrompir</upnp:albumArtUri>
-                   <res protocolInfo="http-get:*:audio/mpeg;DLNA.ORG_PN=MP3;DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000" bitrate="321000" size="6017736" duration="0:03:45.000">'.$url.'</res>
-                  </item>
-                 </DIDL-Lite>';
+        $meta = '<?xml version="1.0"?> <DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sec="http://www.sec.co.kr/">
+                  <item id="f-0" parentID="0" restricted="0">
+    <dc:title>Video</dc:title>
+    <dc:creator>Anonymous</dc:creator>
+    <upnp:class>object.item.videoItem</upnp:class>
+    <res protocolInfo="http-get:*:audio/mpeg:DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000">{0}</res>
+</item>
+</DIDL-Lite>';
         $args = array('InstanceID' => '0', 'CurrentURI' => '<![CDATA[' . $url . ']]>', 'CurrentURIMetaData' => $meta);
         $response = $this->sendRequestToDevice('SetAVTransportURI', $args);
         //var_dump($response);
