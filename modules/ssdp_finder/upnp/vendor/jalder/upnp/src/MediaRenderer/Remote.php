@@ -93,14 +93,14 @@ class Remote {
         if ($url === "") {
             return self::unpause();
         }
-		$id = mt_rand(1, 999999); 
+	$id = mt_rand(1, 999999); 
         $meta = '<DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dlna=”urn:schemas-dlna-org:metadata-1-0" xmlns:sec="http://www.sec.co.kr/" xmlns:pv="http://www.pw.com/pvns">
                   <item id="'.$id.'" parentID="0" restricted="0">
-                   <upnp:class>object.item.videoItem</upnp:class>
+                   <upnp:class>object.item.audioItem</upnp:class>
                    <dc:title>Majordomo message</dc:title>
                    <dc:creator>Majordomo</dc:creator>
                    <upnp:artist>Tarasfrompir</upnp:artist>
-                   <res protocolInfo="http-get:*:'.get_headers($url, 1)["Content-Type"].':DLNA.ORG_PN='.substr(get_headers($url, 1)["Content-Disposition"],-3).';DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000" size="'.get_headers($url, 1)["Content-Length"].'" duration="0:03:57.000" bitrate="4000">'.$playUrl.'</res>
+                   <res protocolInfo="http-get:*:'.get_headers($url, 1)["Content-Type"].':DLNA.ORG_PN='.(substr(get_headers($url, 1)["Content-Disposition"],-3)).';DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000" size="'.get_headers($url, 1)["Content-Length"].'">'.$playUrl.'</res>
                   </item>
                  </DIDL-Lite>';
         $args = array('InstanceID' => '0', 'CurrentURI' => '<![CDATA[' . $url . ']]>', 'CurrentURIMetaData' => '');
