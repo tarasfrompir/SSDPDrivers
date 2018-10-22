@@ -7,6 +7,5 @@ $adress = $this->getProperty("CONTROLADDRESS");
 $remote = new MediaRenderer\Remote($adress);
 $playUrl = $this->getProperty("playUrl");
 $result = $remote->stop();
-DebMes($result);
 $result = $remote->play($playUrl);
 DebMes($result);
