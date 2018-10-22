@@ -154,7 +154,7 @@ private function sendRequestToDevice($method, $arguments, $url, $type) {
         curl_setopt( $ch, CURLOPT_HTTPHEADER, $header );
         curl_setopt( $ch, CURLOPT_HEADER, 0);
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-        curl_setopt( $ch, CURLOPT_URL, $url );
+        curl_setopt( $ch, CURLOPT_URL, $this->ctrlurl );
         curl_setopt( $ch, CURLOPT_POST, TRUE );
         curl_setopt( $ch, CURLOPT_POSTFIELDS, $body );
         $response = curl_exec( $ch );
