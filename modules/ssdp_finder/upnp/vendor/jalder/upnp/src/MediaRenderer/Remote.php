@@ -113,7 +113,7 @@ public function setNext($url) {
                 return self::unpause();
                 }
         $rand = mt_rand(10000000, 99999999);
-        $meta = ';
+        $meta = '';
       
         $args = array('InstanceID'=>0, 'CurrentURI'=>'<![CDATA['.$url.']]>', 'CurrentURIMetaData'=>$meta);  
         $response = $this->sendRequestToDevice('SetAVTransportURI',$args,$this->ctrlurl,$this->service_type);
