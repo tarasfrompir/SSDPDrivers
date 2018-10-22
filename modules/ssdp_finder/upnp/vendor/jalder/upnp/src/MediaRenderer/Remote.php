@@ -93,15 +93,7 @@ class Remote {
         if ($url === "") {
             return self::unpause();
         }
-        $meta = '<?xml version="1.0"?>
-	<DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sec="http://www.sec.co.kr/">
-         <item id="f-0" parentID="0" restricted="0">
-         <dc:title>Video</dc:title>
-         <dc:creator>Anonymous</dc:creator>
-         <upnp:class>object.item.audioItem</upnp:class>
-         <res protocolInfo="http-get:*:audio/mpeg:DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000">{0}</res>
-         </item>
-       </DIDL-Lite>';
+        $meta = '&lt;DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:dlna="urn:schemas-dlna-org:metadata-1-0/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/"&gt;&lt;item id="1$14$744776839$2758061249"&gt;&lt;dc:title&gt;Come Together (The Beatles Cover)&lt;/dc:title&gt;&lt;dc:creator&gt;Unknown&lt;/dc:creator&gt;&lt;upnp:artist&gt;Prince&lt;/upnp:artist&gt;&lt;upnp:album&gt;Coachella&lt;/upnp:album&gt;&lt;upnp:genre&gt;Unknown&lt;/upnp:genre&gt;&lt;upnp:albumArtURI&gt;(null)&lt;/upnp:albumArtURI&gt;&lt;upnp:originalTrackNumber&gt;412506592&lt;/upnp:originalTrackNumber&gt;&lt;upnp:class&gt;object.item.audioItem.musicTrack&lt;/upnp:class&gt;&lt;/item&gt;&lt;/DIDL-Lite&gt;';
         $args = array('InstanceID' => '0', 'CurrentURI' => '<![CDATA[' . $url . ']]>', 'CurrentURIMetaData' => $meta);
         $response = $this->sendRequestToDevice('SetAVTransportURI', $args);
         //var_dump($response);
