@@ -15,5 +15,5 @@ if ( $stop ) {
     $this->setProperty("stop",0);
     }
 
-
+DebMes($result);
 
