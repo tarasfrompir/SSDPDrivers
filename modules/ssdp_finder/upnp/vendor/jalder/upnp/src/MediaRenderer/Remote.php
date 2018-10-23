@@ -25,6 +25,28 @@ class Remote {
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $content = curl_exec($ch);
+
+        // proverka na otvet
+        $retcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        // если не получен ответ делаем поиск по новой
+        if (!$retcode) {
+            $crl = $this->search($this->ip);
+            // получаем айпи и порт устройства по новой
+            $url = parse_url($crl);
+            $this->ip = $url['host'];
+            $this->port = $url['port'];
+            // получаем XML по новой
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $crl);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $content = curl_exec($ch);
+            curl_close($ch);
+            }
+
+        // загружаем xml
         libxml_use_internal_errors(true);
         $xml = simplexml_load_string($content);
 
@@ -61,7 +83,7 @@ class Remote {
         $body.= '</s:Envelope>';
         $header = array(
             'Host: ' . $this->ip . ':' . $this->port,
-            'User-Agent: ' . $this->user_agent, //fudge the user agent to get desired video format
+            'User-Agent: Majordomo/ver-x.x UDAP/2.0 Win/7', //fudge the user agent to get desired video format
             'Content-Length: ' . strlen($body) ,
             'Connection: close',
             'Content-Type: text/xml; charset="utf-8"',
@@ -95,8 +117,19 @@ class Remote {
         }
         $content_type = get_headers($url, 1)["Content-Type"];
         var_dump($content_type);
-    	$MetaData='&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dlna="urn:schemas-dlna-org:metadata-1-0/" xmlns:sec="http://www.sec.co.kr/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/"&gt;&lt;item id="0" parentID="0" restricted="1"&gt;&lt;upnp:class&gt;object.item.audioItem.musicTrack&lt;/upnp:class&gt;&lt;dc:title&gt;Live Audio&lt;/dc:title&gt;&lt;dc:creator&gt;PulseAudio&lt;/dc:creator&gt;&lt;upnp:artist&gt;PulseAudio on bozo-laptop&lt;/upnp:artist&gt;&lt;upnp:albumArtURI&gt;&lt;/upnp:albumArtURI&gt;&lt;upnp:album&gt;Stream&lt;/upnp:album&gt;&lt;res protocolInfo="http-get:*:'.$content_type.':DLNA.ORG_OP=00;DLNA.ORG_FLAGS=017000000000000 00000000000000000"&gt;' . $url . '&lt;/res&gt;&lt;/item&gt;&lt;/DIDL-Lite&gt;';
-	$args = array('InstanceID' => 0, 'CurrentURI' => '<![CDATA[' . $url . ']]>', 'CurrentURIMetaData' => $MetaData);
+    	$MetaData='&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dlna="urn:schemas-dlna-org:metadata-1-0/" xmlns:sec="http://www.sec.co.kr/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/"&gt;
+&lt;item id="0" parentID="0" restricted="1"&gt;
+&lt;upnp:class&gt;object.item.audioItem.musicTrack&lt;/upnp:class&gt;
+&lt;dc:title&gt;Live Audio&lt;/dc:title&gt;
+&lt;dc:creator&gt;PulseAudio&lt;/dc:creator&gt;
+&lt;upnp:artist&gt;PulseAudio on bozo-laptop&lt;/upnp:artist&gt;
+&lt;upnp:albumArtURI&gt;&lt;/upnp:albumArtURI&gt;
+&lt;upnp:album&gt;Stream&lt;/upnp:album&gt;
+&lt;res protocolInfo="http-get:*:audio/mpeg:DLNA.ORG_OP=00;DLNA.ORG_FLAGS=017000000000000 00000000000000000"&gt;' . $url . '&lt;/res&gt;
+&lt;/item&gt;
+&lt;/DIDL-Lite&gt;';
+        $args = array('InstanceID' => 0, 'CurrentURI' => '<![CDATA[' . $url . ']]>', 'CurrentURIMetaData' => $MetaData);
         $response = $this->sendRequestToDevice('SetAVTransportURI', $args);
         var_dump($response);
         $args = array( 'InstanceID' => 0, 'Speed' => 1);
@@ -175,5 +208,40 @@ class Remote {
     public function rewind() {
         return $this->previous();
     }
-    
+    // функция автозаполнения поля PLAYER_CONTROL_ADDRESS при его отсутствии
+     private function search($ip = '255.255.255.255') {
+        //create the socket
+        $socket = socket_create(AF_INET, SOCK_DGRAM, 0);
+        socket_set_option($socket, SOL_SOCKET, SO_BROADCAST, true);
+        //all
+        $request  = 'M-SEARCH * HTTP/1.1'."\r\n";
+        $request .= 'HOST: 239.255.255.250:1900'."\r\n";
+        $request .= 'MAN: "ssdp:discover"'."\r\n";
+        $request .= 'MX: 2'."\r\n";
+        $request .= 'ST: ssdp:all'."\r\n";
+        $request .= 'USER-AGENT: Majordomo/ver-x.x UDAP/2.0 Win/7'."\r\n";
+        $request .= "\r\n";
+        
+        socket_sendto($socket, $request, strlen($request), 0, $ip, 1900);
+        // send the data from socket
+        socket_set_option($socket, SOL_SOCKET, SO_RCVTIMEO, array('sec'=>'1', 'usec'=>'128'));
+        $response = array();
+        do {
+            $buf = null;
+            if (($len = @socket_recvfrom($socket, $buf, 2048, 0, $ip, $port)) == -1) {
+                echo "socket_read() failed: " . socket_strerror(socket_last_error()) . "\n";
+            }
+            if(!is_null($buf)){
+                $messages = explode("\r\n", $buf);
+                    foreach( $messages as $row ) {
+                         if( stripos( $row, 'loca') === 0 ) {
+                              $response = str_ireplace( 'location: ', '', $row );
+                         }
+                    }
+            }
+        } while(!is_null($buf));
+        socket_close($socket);
+          $response = str_ireplace("Location:", "", $response);
+        return $response;
+    } 
 }
