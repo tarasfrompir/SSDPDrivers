@@ -9,9 +9,7 @@ namespace jalder\Upnp\MediaRenderer;
 use jalder\Upnp;
 
 class Remote {
-    public
-
-    function __construct($server) {
+    public function __construct($server) {
         $crl = str_ireplace("Location:", "", $server);
 
         // получаем айпи и порт устройства
