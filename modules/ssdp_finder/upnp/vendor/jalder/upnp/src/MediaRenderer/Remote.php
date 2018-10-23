@@ -93,6 +93,7 @@ class Remote {
         if ($url === "") {
             return self::unpause();
         }
+        $content_type = get_headers($playUrl, 1)["Content-Type"];
     	$MetaData='&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dlna="urn:schemas-dlna-org:metadata-1-0/" xmlns:sec="http://www.sec.co.kr/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/"&gt;
 &lt;item id="0" parentID="0" restricted="1"&gt;
