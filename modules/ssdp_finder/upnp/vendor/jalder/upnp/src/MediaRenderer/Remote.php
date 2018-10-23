@@ -93,7 +93,8 @@ class Remote {
         if ($url === "") {
             return self::unpause();
         }
-        $content_type = get_headers($playUrl, 1)["Content-Type"];
+        $content_type = get_headers($url, 1)["Content-Type"];
+        var_dump($content_type);
     	$MetaData='&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dlna="urn:schemas-dlna-org:metadata-1-0/" xmlns:sec="http://www.sec.co.kr/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/"&gt;
 &lt;item id="0" parentID="0" restricted="1"&gt;
@@ -103,7 +104,7 @@ class Remote {
 &lt;upnp:artist&gt;PulseAudio on bozo-laptop&lt;/upnp:artist&gt;
 &lt;upnp:albumArtURI&gt;&lt;/upnp:albumArtURI&gt;
 &lt;upnp:album&gt;Stream&lt;/upnp:album&gt;
-&lt;res protocolInfo="http-get:*:audio/mpeg:DLNA.ORG_OP=00;DLNA.ORG_FLAGS=017000000000000 00000000000000000"&gt;' . $url . '&lt;/res&gt;
+&lt;res protocolInfo="http-get:*:'.$content_type.':DLNA.ORG_OP=00;DLNA.ORG_FLAGS=017000000000000 00000000000000000"&gt;' . $url . '&lt;/res&gt;
 &lt;/item&gt;
 &lt;/DIDL-Lite&gt;';
         $args = array('InstanceID' => 0, 'CurrentURI' => '<![CDATA[' . $url . ']]>', 'CurrentURIMetaData' => $MetaData);
