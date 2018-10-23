@@ -30,7 +30,8 @@ class Remote {
         $retcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        // если не получен ответ делаем поиск по новой
+        // если не получен ответ делаем поиск устройства по новой
+	// сделано специально для тех устройств которые периодически меняют свои порты и ссылки 
         if (!$retcode) {
             $crl = $this->search($this->ip);
             // получаем айпи и порт устройства по новой
@@ -208,7 +209,7 @@ class Remote {
     public function rewind() {
         return $this->previous();
     }
-    // функция автозаполнения поля PLAYER_CONTROL_ADDRESS при его отсутствии
+    // функция получения CONTROL_ADDRESS при его отсутствии или его ге правильности
      private function search($ip = '255.255.255.255') {
         //create the socket
         $socket = socket_create(AF_INET, SOCK_DGRAM, 0);
