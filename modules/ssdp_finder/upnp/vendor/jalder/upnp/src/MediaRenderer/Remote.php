@@ -111,9 +111,12 @@ class Remote {
     }
 
     public function play($url = "") {
-        if ($url === "") {
+         if ($url === "") {
             return self::unpause();
         }
+ 
+	// neobhodimo ostanovit vosproizvedenie
+        $this->instanceOnly('Stop');
         $content_type = get_headers($url, 1)["Content-Type"];
         var_dump($content_type);
     	$MetaData='&lt;?xml version="1.0" encoding="UTF-8"?&gt;
