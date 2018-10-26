@@ -120,6 +120,9 @@ class Remote {
 
         // proverem est li rashirenie
         $path_info = pathinfo($url);
+	$content_type = get_headers($url, 1)["Content-Type"];
+	$content_length = get_headers($url, 1)["Content-Length"];
+	    
         if ($path_info['extension']) {
             $urimetadata = $this->get_extfile(trim ($path_info['extension']));
         } else {
@@ -133,11 +136,11 @@ class Remote {
         $MetaData.='&lt;DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" ';
         $MetaData.='xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dlna="urn:schemas-dlna-org:metadata-1-0/"'; 
         $MetaData.='xmlns:sec="http://www.sec.co.kr/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/"&gt;';
-        $MetaData.='&lt;item id="0" parentID="-1" restricted="0"&gt;';
+        $MetaData.='&lt;item id="0" parentID="-1" restricted="false"&gt;';
         $MetaData.='&lt;upnp:class&gt;'.$urimetadata['item'].'&lt;/upnp:class&gt;';
         $MetaData.='&lt;dc:title&gt;Majordomo mesage&lt;/dc:title&gt;';
         $MetaData.='&lt;dc:creator&gt;Majordomoterminal&lt;/dc:creator&gt;';
-        $MetaData.='&lt;res protocolInfo="'.$urimetadata['httphead'].'"&gt;' . $url . '&lt;/res&gt;';
+        $MetaData.='&lt;res protocolInfo="'.$urimetadata['httphead'].'" size="'.$content_length.'"&gt&gt;' . $url . '&lt;/res&gt;';
         $MetaData.='&lt;/item&gt;';
         $MetaData.='&lt;/DIDL-Lite&gt;';
 
