@@ -140,8 +140,12 @@ class Remote {
         $MetaData.='&lt;upnp:class&gt;'.$urimetadata['item'].'&lt;/upnp:class&gt;';
         $MetaData.='&lt;dc:title&gt;Majordomo mesage&lt;/dc:title&gt;';
         $MetaData.='&lt;dc:creator&gt;Majordomoterminal&lt;/dc:creator&gt;';
-        $MetaData.='&lt;res protocolInfo="'.$urimetadata['httphead'].'" size="'.$content_length.'"&gt&gt;' . $url . '&lt;/res&gt;';
-        $MetaData.='&lt;/item&gt;';
+        $MetaData.='&lt;res protocolInfo="'.$urimetadata['httphead'];
+        if ($content_length>100){
+            $MetaData.='" size="'.$content_length.'"';
+	    }
+	$MetaData.='&gt&gt;' . $url . '&lt;/res&gt;';
+	$MetaData.='&lt;/item&gt;';
         $MetaData.='&lt;/DIDL-Lite&gt;';
 
         $args = array('InstanceID' => 0, 'CurrentURI' => '<![CDATA[' . $url . ']]>', 'CurrentURIMetaData' => $MetaData);
