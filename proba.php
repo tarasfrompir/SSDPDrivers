@@ -1,5 +1,8 @@
 <?php
 /** AVTransport UPnP Class
+ * http://www.upnp.org/specs/av/UPnP-av-ContentDirectory-v4-Service.pdf
+ * https://connect.smartliving.ru/tasks/76.html
+ * https://github.com/oeuillot/upnpserver/blob/master/default-config.json
  * Used for controlling renderers
  *
  * @author jalder
@@ -309,6 +312,7 @@ private function get_extfile($ext){
     'mp3'=> 	array('item'=>'object.item.audioItem.musicTrack','httphead'=>'http-get:*:audio/mpeg:DLNA.ORG_PN=MP3;DLNA.ORG_OP=11;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000'),
     'ogg'=> 	array('item'=>'object.item.audioItem.musicTrack','httphead'=>'http-get:*:audio/x-ogg:*'),
     'wma'=> 	array('item'=>'object.item.audioItem.musicTrack','httphead'=>'http-get:*:audio/x-ms-wma:DLNA.ORG_PN=WMAFULL;DLNA.ORG_OP=00;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000'),
+    'm3u'=> 	array('item'=>'object.item.playlistItem','httphead'=>'res protocolInfo="http-get:*:audio/m3u:*"'),
 );
     return $extmetadatauri[$ext];
     }
