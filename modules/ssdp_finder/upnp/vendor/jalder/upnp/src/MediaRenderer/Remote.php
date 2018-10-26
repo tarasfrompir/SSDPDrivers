@@ -121,16 +121,18 @@ class Remote {
         var_dump($content_type);
     	$MetaData='&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dlna="urn:schemas-dlna-org:metadata-1-0/" xmlns:sec="http://www.sec.co.kr/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/"&gt;
-&lt;item id="0" parentID="0" restricted="1"&gt;
+&lt;item id="0" parentID="-1" restricted="1"&gt;
 &lt;upnp:class&gt;object.item.audioItem.musicTrack&lt;/upnp:class&gt;
 &lt;dc:title&gt;Majordomo mesage&lt;/dc:title&gt;
 &lt;dc:creator&gt;Majordomoterminal&lt;/dc:creator&gt;
 &lt;upnp:artist&gt;tarasfrompir&lt;/upnp:artist&gt;
 &lt;upnp:albumArtURI&gt;&lt;/upnp:albumArtURI&gt;
 &lt;upnp:album&gt;Stream&lt;/upnp:album&gt;
-&lt;res protocolInfo="http-get:*:'.$content_type.':DLNA.ORG_OP=00;DLNA.ORG_FLAGS=017000000000000 00000000000000000"&gt;' . $url . '&lt;/res&gt;
 &lt;/item&gt;
 &lt;/DIDL-Lite&gt;';
+	    
+//&lt;res protocolInfo="http-get:*:'.$content_type.':DLNA.ORG_OP=00;DLNA.ORG_FLAGS=017000000000000 00000000000000000"&gt;' . $url . '&lt;/res&gt;
+	    
         $args = array('InstanceID' => 0, 'CurrentURI' => '<![CDATA[' . $url . ']]>', 'CurrentURIMetaData' => $MetaData);
         $response = $this->sendRequestToDevice('SetAVTransportURI', $args);
         var_dump($response);
