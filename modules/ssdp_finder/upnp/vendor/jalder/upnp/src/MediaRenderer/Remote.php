@@ -9,7 +9,7 @@ namespace jalder\Upnp\MediaRenderer;
 use jalder\Upnp;
 
 class Remote {
-    public function __construct($server) {
+       public function __construct($server) {
         $crl = str_ireplace("Location:", "", $server);
 
         // получаем айпи и порт устройства
@@ -129,25 +129,22 @@ class Remote {
             $urimetadata = $this->get_urihead($content_type);
         }
         //var_dump($urimetadata);
-    	$MetaData ='&lt;?xml version="1.0" encoding="UTF-8"?&gt;';
-        $MetaData.='&lt;DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" ';
-        $MetaData.='xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dlna="urn:schemas-dlna-org:metadata-1-0/"'; 
-        $MetaData.='xmlns:sec="http://www.sec.co.kr/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/"&gt;';
-        $MetaData.='&lt;item id="0"; parentID="-1" restricted="false"&gt;';
+    	$MetaData ='&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;';
+        $MetaData.='&lt;DIDL-Lite xmlns=&quot;urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/&quot; ';
+        $MetaData.='xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot; xmlns:dlna=&quot;urn:schemas-dlna-org:metadata-1-0/&quot;'; 
+        $MetaData.='xmlns:sec=&quot;http://www.sec.co.kr/&quot; xmlns:upnp=&quot;urn:schemas-upnp-org:metadata-1-0/upnp/&quot;&gt;';
+        $MetaData.='&lt;item id=&quot;0&quot; parentID=&quot;-1&quot; restricted=&quot;0&quot;&gt;';
         $MetaData.='&lt;upnp:class&gt;'.$urimetadata['item'].'&lt;/upnp:class&gt;';
         $MetaData.='&lt;dc:title&gt;Majordomo mesage&lt;/dc:title&gt;';
         $MetaData.='&lt;dc:creator&gt;Majordomoterminal&lt;/dc:creator&gt;';
-        $MetaData.='&lt;res protocolInfo="'.$urimetadata['httphead'].'"&gt;' . $url . '&lt;/res&gt;';
+        $MetaData.='&lt;res protocolInfo=&quot;'.$urimetadata['httphead'].'&quot;&gt;' . $url . '&lt;/res&gt;';
         $MetaData.='&lt;/item&gt;';
         $MetaData.='&lt;/DIDL-Lite&gt;';
 
-
         $args = array('InstanceID' => 0, 'CurrentURI' => '<![CDATA[' . $url . ']]>', 'CurrentURIMetaData' => $MetaData);
         $response = $this->sendRequestToDevice('SetAVTransportURI', $args);
-        var_dump($response);
         $args = array( 'InstanceID' => 0, 'Speed' => 1);
         $response = $this->sendRequestToDevice('Play', $args);
-        var_dump($response);
 	return $response;
     }
 
@@ -257,6 +254,7 @@ class Remote {
           $response = str_ireplace("Location:", "", $response);
         return $response;
     } 
+// dorabativaem
 private function get_urihead($uri_head){
     $avmetadatauri = array(
 	'video/avi'=>			array('item'=>'object.item.videoItem', 'httphead'=>'http-get:*:video/avi:DLNA.ORG_PN=PV_DIVX_DX50;DLNA.ORG_OP=11;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000'), 
@@ -283,6 +281,7 @@ private function get_urihead($uri_head){
 	);
     return $avmetadatauri[$uri_head];
     }
+// get headers with extends files
 private function get_extfile($ext){
     $extmetadatauri = array(
     'avi'=> 	array('item'=>'object.item.videoItem', 		'httphead'=>'http-get:*:video/avi:DLNA.ORG_PN=PV_DIVX_DX50;DLNA.ORG_OP=11;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000'), 
