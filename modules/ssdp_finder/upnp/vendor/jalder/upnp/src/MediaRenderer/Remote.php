@@ -25,7 +25,7 @@ class Remote {
         $content = curl_exec($ch);
 
         // proverka na otvet
-        $retcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $retcode = @curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
         // если не получен ответ делаем поиск устройства по новой
@@ -133,13 +133,14 @@ class Remote {
         $MetaData.='&lt;DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" ';
         $MetaData.='xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dlna="urn:schemas-dlna-org:metadata-1-0/"'; 
         $MetaData.='xmlns:sec="http://www.sec.co.kr/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/"&gt;';
-        $MetaData.='&lt;item id="0" parentID="-1" restricted="0"&gt;';
+        $MetaData.='&lt;item id="0"; parentID="-1" restricted="false"&gt;';
         $MetaData.='&lt;upnp:class&gt;'.$urimetadata['item'].'&lt;/upnp:class&gt;';
         $MetaData.='&lt;dc:title&gt;Majordomo mesage&lt;/dc:title&gt;';
         $MetaData.='&lt;dc:creator&gt;Majordomoterminal&lt;/dc:creator&gt;';
         $MetaData.='&lt;res protocolInfo="'.$urimetadata['httphead'].'"&gt;' . $url . '&lt;/res&gt;';
         $MetaData.='&lt;/item&gt;';
         $MetaData.='&lt;/DIDL-Lite&gt;';
+
 
         $args = array('InstanceID' => 0, 'CurrentURI' => '<![CDATA[' . $url . ']]>', 'CurrentURIMetaData' => $MetaData);
         $response = $this->sendRequestToDevice('SetAVTransportURI', $args);
@@ -283,7 +284,6 @@ private function get_urihead($uri_head){
     return $avmetadatauri[$uri_head];
     }
 private function get_extfile($ext){
-    // несколько расширений проверено
     $extmetadatauri = array(
     'avi'=> 	array('item'=>'object.item.videoItem', 		'httphead'=>'http-get:*:video/avi:DLNA.ORG_PN=PV_DIVX_DX50;DLNA.ORG_OP=11;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000'), 
     'asf'=> 	array('item'=>'object.item.videoItem', 		'httphead'=>'http-get:*:video/x-ms-asf:DLNA.ORG_PN=MPEG4_P2_ASF_SP_G726;DLNA.ORG_OP=00;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000 '), 
