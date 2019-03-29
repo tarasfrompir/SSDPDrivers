@@ -13,7 +13,8 @@ $browse = new Mediaserver\Remote($adress);
 $directories = $browse->browse();
 $count=0;
 // очищаем данные файлов текущего сервера
-SQLExec("DELETE FROM mediaservers_playlist WHERE LINKED_OBJECT='".$this->description."'");
+//SQLExec("DELETE FROM mediaservers_playlist WHERE LINKED_OBJECT='".$this->description."'");
+SQLExec("TRUNCATE TABLE mediaservers_playlist");
 
 foreach($directories as $list){
     $files = $browse->browsexmlfiles($list['id']);
@@ -33,8 +34,8 @@ foreach($directories as $list){
             $Record['GENRE'] = 'Видео';
             }else if (in_array($ext_file, $audio)) {
             $Record['GENRE'] = 'Аудио';
-            }else {
-            $Record['GENRE'] = 'Изображения';
+            //}else {
+            //$Record['GENRE'] = 'Изображения';
             };
         $Record['LINKED_OBJECT'] = $this->description;
         SQLUpdateInsert('mediaservers_playlist', $Record);
