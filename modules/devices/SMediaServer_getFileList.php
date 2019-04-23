@@ -24,7 +24,7 @@ foreach($directories as $list){
         //print_r ($file ['title']);
         //print_r ($file ['genre']);
         //print_r ($file ['creator']);
-        $Record = SQLSelectOne("SELECT * FROM mediaservers_playlist WHERE URL_LINK='".$file ['link']."'");
+        $Record = SQLSelectOne("SELECT * FROM mediaservers_playlist WHERE URL_LINK='".$link."'");
         $Record['URL_LINK'] = $link;
         $tcode = mb_detect_encoding($file ['title']);
         $Record['TITLE'] = iconv($tcode, "UTF-8", $file ['title']);
