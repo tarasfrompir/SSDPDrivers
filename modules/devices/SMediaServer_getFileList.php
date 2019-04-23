@@ -14,7 +14,7 @@ $directories = $browse->browse();
 $count=0;
 // очищаем данные файлов текущего сервера
 //SQLExec("DELETE FROM mediaservers_playlist WHERE LINKED_OBJECT='".$this->description."'");
-SQLExec("TRUNCATE TABLE mediaservers_playlist");
+//SQLExec("TRUNCATE TABLE mediaservers_playlist");
 
 foreach($directories as $list){
     $files = $browse->browsexmlfiles($list['id']);
